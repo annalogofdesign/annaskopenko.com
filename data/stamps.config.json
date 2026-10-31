@@ -1,0 +1,22 @@
+{
+  "seed": 62528,
+  "frames": "mixed",
+  "inkScheme": "duo",
+  "inkA": "blue",
+  "inkB": "green",
+  "inkOpacity": 0.8,
+  "ageFade": 0.5,
+  "size": 0.93,
+  "rotation": 14,
+  "jitter": 1.7,
+  "roughness": 2,
+  "voids": 0.4,
+  "halo": 0.35,
+  "pressure": 0.45,
+  "doubleStrike": 0.25,
+  "rule": 1.15,
+  "logoSize": 1.05,
+  "pictograms": true,
+  "cornerMeaning": true,
+  "killerBars": true
+}
