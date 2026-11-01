@@ -263,7 +263,7 @@ a { color: inherit; }
   text-wrap: balance;
 }
 .hero-headline em {
-  font-size: 1.09em; /* Figma: italic 96 over roman 88 */
+  font-size: 0.98em; /* the slant reads larger at the same size */
 }
 
 .hero-nav {
