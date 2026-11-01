@@ -648,6 +648,7 @@ a { color: inherit; }
   padding-top: clamp(0px, calc(65 * var(--u)), 65px);
 }
 .about-copy .display { max-width: 840px; }
+.about-copy .lede { max-width: 640px; }
 .portrait {
   position: relative;
   aspect-ratio: 544 / 670;
