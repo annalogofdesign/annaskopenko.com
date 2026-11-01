@@ -594,6 +594,7 @@ a { color: inherit; }
   position: absolute;
   left: 0.333%; top: -3.1%;
   width: 99.222%;
+  scale: 1.02; /* just past the drawing, so its lines don't peek out */
   max-width: none;
   filter: drop-shadow(0 12px 18px rgb(60 40 160 / 0.22));
 }
