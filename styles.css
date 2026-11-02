@@ -195,11 +195,7 @@ a { color: inherit; }
   margin: 0;
   list-style: none;
 }
-.tag--caps { text-transform: uppercase; }
-/* In a Coming soon tag's place once a case study is live: same size, inked so it reads as the way in */
-.tag.tag--link { background: var(--ink); color: var(--bg); text-decoration: none; transition: opacity 150ms ease-out; }
-@media (hover: hover) { .case:hover .tag.tag--link { opacity: 0.85; } }
-.tag {
+.tag--caps { text-transform: uppercase; }.tag {
   padding: 6px 8px;
   background: var(--tag-bg);
   font-size: 16px;
@@ -539,15 +535,25 @@ a { color: inherit; }
 .case-title { font-size: clamp(39px, calc(58 * var(--u)), 58px); }
 .case-title a { text-decoration: none; }
 a.case-media { display: block; }
-/* A live case study: the title's link covers the whole row, and hovering the row underlines the
-   title and lifts the phones a little */
-.case:has(.case-title a) { position: relative; }
+/* A live case study: the title's link covers the whole row. Hovering the row lifts it from the band
+   to the page's paper, a little past the content on each side, and the phones rise a little */
+.case:has(.case-title a) { position: relative; isolation: isolate; }
 .case-title a::after { content: ""; position: absolute; inset: 0; }
+.case:has(.case-title a)::before {
+  content: "";
+  position: absolute;
+  inset: var(--hairline) calc(-1 * clamp(12px, calc(32 * var(--u)), 32px)) 0;
+  z-index: -1;
+  background: var(--bg);
+  opacity: 0;
+  transition: opacity 200ms ease-out;
+}
 .case-media .tile-phones { transition: scale 300ms cubic-bezier(0.23, 1, 0.32, 1); }
 @media (hover: hover) {
-  .case:has(.case-title a):hover .case-title a { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.12em; }
+  .case:has(.case-title a):hover::before { opacity: 1; }
   .case:has(.case-title a):hover .tile-phones { scale: 1.03; }
 }
+.case:has(.case-title a):has(:focus-visible)::before { opacity: 1; }
 @media (prefers-reduced-motion: reduce) { .case-media .tile-phones { transition: none; } }
 .case-status { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; }
 
