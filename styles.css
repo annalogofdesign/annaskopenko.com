@@ -538,7 +538,7 @@ a.case-media { display: block; }
 /* A case study still to come carries a small rubber stamp instead of a tag: the hero's ink, tilted,
    sized to the tag it replaced */
 .soon {
-  width: 132px;
+  width: 150px; /* 250 units wide: the lettering stays the size it was at 132px / 220 */
   height: auto;
   margin-block: -6px;
   rotate: -5deg;
