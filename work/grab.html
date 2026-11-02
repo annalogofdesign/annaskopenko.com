@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Grab homepage redesign — Anna Skopenko</title>
+  <meta name="description" content="Reimagining the Grab homepage for 187+ million users. I led the redesign from the first workshop to implementation.">
+  <link rel="preload" href="../fonts/newsreader-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../fonts/newsreader-italic-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../fonts/manrope-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="cs-page">
+  <a class="skip-link" href="#intro">Skip to the story</a>
+
+  <header class="cs-bar">
+    <div class="container cs-bar-inner">
+      <a class="dock-name" href="../" data-wordmark="0.78">anna skopenko</a>
+      <a class="cs-back" href="../#work">All work</a>
+    </div>
+  </header>
+
+  <!-- The words come from grab.md: tools/build_cases.py rewrites the toc and story blocks below.
+       Edit grab.md, not those blocks. -->
+  <main class="container cs-layout">
+    <aside class="cs-rail">
+      <div class="cs-rail-product">
+        <p class="cs-rail-name">Grab</p>
+        <p>The homepage of Southeast Asia’s super app</p>
+      </div>
+      <nav aria-label="On this page">
+        <ol class="cs-toc">
+          <!-- toc -->
+          <li><a href="#intro">Intro</a></li>
+          <li><a href="#everyone-wanted-a-tile">Everyone wanted a tile</a></li>
+          <li><a href="#getting-everyone-in-one-room">Getting everyone in one room</a></li>
+          <li><a href="#thirty-directions-eight-tested">Thirty directions, eight tested</a></li>
+          <li><a href="#services-as-tabs">Services as tabs</a></li>
+          <li><a href="#shipping-it-without-shocking-anyone">Shipping it without shocking anyone</a></li>
+          <li><a href="#one-app-again">One app again</a></li>
+          <li><a href="#where-i-left-it">Where I left it</a></li>
+          <li><a href="#what-id-tell-myself">What I’d tell myself</a></li>
+          <!-- /toc -->
+        </ol>
+      </nav>
+      <a class="cs-rail-link" href="https://www.grab.com">grab.com</a>
+    </aside>
+
+    <article class="cs-main" data-eyebrow="03 / Grab · 2023">
+      <!-- story -->
+      <header class="cs-head">
+        <p class="eyebrow">03 / Grab · 2023</p>
+        <h1 class="display cs-title">Reimagining the Grab homepage for 187+ million users</h1>
+      </header>
+
+      <figure class="cs-figure">
+        <iframe src="grab/cover.html" title="Animation: Two phones showing the redesigned Grab homepage, with services as tabs along the top" tabindex="-1"></iframe>
+      </figure>
+
+      <section class="cs-section" id="intro" aria-label="Introduction">
+        <div class="cs-prose">
+          <p>Grab is Southeast Asia’s super app. People book rides, order food and groceries, send parcels and pay from it, in more than ten languages. Almost all of it starts on one screen: the homepage.</p>
+          <p>I spent four years at Grab while living in Singapore, and grew from product designer to senior and then lead product designer. As a lead, I was trusted with the biggest screen in the app: the homepage.</p>
+          <p>I was the lead designer on its redesign, from the first workshop to implementation. Along the way I worked with product designers from other teams, user researchers and product managers. Every service in the app shares that one screen, and each team behind it wants a spot on it, so most of the job was getting them to agree on one design. Here’s how that went.</p>
+        </div>
+      </section>
+
+      <section class="cs-section" id="everyone-wanted-a-tile" aria-labelledby="everyone-wanted-a-tile-title">
+        <div class="cs-prose">
+          <h2 class="cs-h" id="everyone-wanted-a-tile-title">Everyone wanted a tile</h2>
+          <p>Every new service wanted a spot on the homepage, and nothing decided who got one or where. So each service asked for its own tile, and then the business units argued about the order.</p>
+          <p>The homepage had 14 functions and more than 20 ways in. Meanwhile 70% of taps went to the same three tiles.</p>
+        </div>
+        <figure class="cs-figure">
+          <img src="grab/before.png" alt="The homepage before the redesign, labelled: top ad, universal search, service tiles, shortcuts, homepage feed and bottom nav" loading="lazy">
+        </figure>
+        <div class="cs-prose">
+          <p>The tiles weren’t helping anyone find something new, either. Depending on the country, 94–99% of people only ever used the top three services. Fewer than 20% scrolled past the big ad to the feed, partly because they didn’t know anything was down there.</p>
+          <p>Each service’s own homepage looked like a different app, so people had to relearn the UI every time they switched. And each team kept rebuilding the same components slightly differently.</p>
+        </div>
+        <figure class="cs-figure">
+          <img src="grab/consistency-before.png" alt="Five Grab service homepages before the redesign, each with its own layout and patterns" loading="lazy">
+        </figure>
+      </section>
+
+      <section class="cs-section" id="getting-everyone-in-one-room" aria-labelledby="getting-everyone-in-one-room-title">
+        <div class="cs-prose">
+          <h2 class="cs-h" id="getting-everyone-in-one-room-title">Getting everyone in one room</h2>
+          <p>Before designing anything, I ran a three-day design sprint with designers, engineers, analysts and some of our leadership. We shared the problem and the data, split into teams, sketched divergent ideas and got feedback from the leads.</p>
+          <p>It meant the vision had support before there was a single screen to argue about.</p>
+        </div>
+      </section>
+
+      <section class="cs-section" id="thirty-directions-eight-tested" aria-labelledby="thirty-directions-eight-tested-title">
+        <div class="cs-prose">
+          <h2 class="cs-h" id="thirty-directions-eight-tested-title">Thirty directions, eight tested</h2>
+          <p>I explored more than 30 directions for how the homepage could be organised, and we tested 8 of them with people in Singapore and Indonesia.</p>
+        </div>
+        <figure class="cs-figure">
+          <img src="grab/explorations.png" alt="Six of the explored homepage concepts in grey: map-first, search-first, services in the bottom nav and others" loading="lazy">
+        </figure>
+        <div class="cs-prose">
+          <p>Three findings changed the design. People split into two camps, search first and service first, so the homepage had to work for both. Shortcuts gave people a sense of relief and familiarity, so they stayed. And search at the bottom of the screen was less reachable than we thought.</p>
+        </div>
+      </section>
+
+      <section class="cs-section" id="services-as-tabs" aria-labelledby="services-as-tabs-title">
+        <div class="cs-prose">
+          <h2 class="cs-h" id="services-as-tabs-title">Services as tabs</h2>
+          <p>The structure we landed on moves the core services into tabs at the top. All services sit one tap away, next to search. Shortcuts change with the time and place, and the space below finally has room for discovery.</p>
+        </div>
+        <figure class="cs-figure">
+          <img src="grab/final-ia.png" alt="The final homepage structure, labelled: contextual location, core services navigation, wallet and profile, all services, personalised shortcuts, and personalised and sponsored content" loading="lazy">
+        </figure>
+        <div class="cs-prose">
+          <p>The tabs also let people move between Home, Transport, Food and Mart without leaving the page. The content below the top bar changes, and the structure around it stays put.</p>
+        </div>
+        <figure class="cs-figure">
+          <img src="grab/single-page-nav.gif" alt="Switching between the Home, Transport, Food and Mart tabs on a single page" loading="lazy">
+        </figure>
+        <div class="cs-prose">
+          <p>The header is the part every page shares: the location picker, the service tabs, the profile and all services.</p>
+        </div>
+        <figure class="cs-figure">
+          <img src="grab/header-anatomy.png" alt="The universal navigation header, labelled: a location picker you can change from any page, single-page navigation tabs personalised to you, one place for your profile and payment methods, and all services in one place" loading="lazy">
+        </figure>
+      </section>
+
+      <section class="cs-section" id="shipping-it-without-shocking-anyone" aria-labelledby="shipping-it-without-shocking-anyone-title">
+        <div class="cs-prose">
+          <h2 class="cs-h" id="shipping-it-without-shocking-anyone-title">Shipping it without shocking anyone</h2>
+          <p>Once the structure was approved, we shipped it as experiments, one hypothesis at a time, and I iterated on the designs as results came in.</p>
+        </div>
+        <figure class="cs-figure">
+          <img src="grab/experiments.png" alt="Four rounds of experiments: fewer tiles with More visible, tabs along the top, a bigger More sheet, then location and profile moved to the top" loading="lazy">
+        </figure>
+        <div class="cs-prose">
+          <p>Putting the core services first worked. Conversion went up 0.09pp, and the services that moved behind “More” didn’t get lost: clicks on the More page went up 5pp, and impressions of the other services went up 9.5%.</p>
+          <p>Muscle memory was harder to beat. People who knew the old layout converted 0.2pp less with the new tabs. But the tabs gave the homepage more room, and search adoption went up 3.5pp and feed engagement 3.6pp.</p>
+          <p>New users had no trouble at all. Their conversion didn’t drop, and they used universal search (+0.04pp), the feed (+0.94pp) and shortcuts (+0.87pp) more.</p>
+          <p>So we wanted to ship the parts we believed in most, without changing so much at once that people churned. I designed an in-between version. It keeps familiar things like the service tiles, and still gets single-page navigation and more room for discovery.</p>
+          <p>People also needed to find their way around the new layout. Only one tooltip shows up unprompted. The rest appear when someone reaches for the old place, like tapping where Profile used to be, and are gone by the next session.</p>
+        </div>
+        <figure class="cs-figure">
+          <img src="grab/onboarding-profile.gif" alt="A tooltip pointing to Profile’s new place at the top right, shown after tapping its old place in the bottom nav" loading="lazy">
+        </figure>
+      </section>
+
+      <section class="cs-section" id="one-app-again" aria-labelledby="one-app-again-title">
+        <div class="cs-prose">
+          <h2 class="cs-h" id="one-app-again-title">One app again</h2>
+          <p>The redesign set the direction for every core service’s homepage, and got them onto Grab’s new design system along the way. People learn the structure once, and teams reuse the same components instead of rebuilding them.</p>
+        </div>
+        <figure class="cs-figure">
+          <iframe class="grid-paper" src="grab/all-pages.html" title="Animation: Home, Transport, Food, Mart and Express before the redesign, each with its own layout, above the same five after it, sharing one header, tabs and search on the new design system" loading="lazy" tabindex="-1"></iframe>
+        </figure>
+      </section>
+
+      <section class="cs-section" id="where-i-left-it" aria-labelledby="where-i-left-it-title">
+        <div class="cs-prose">
+          <h2 class="cs-h" id="where-i-left-it-title">Where I left it</h2>
+          <p>By the time I left, the project had taken more than 13 months, 30+ iterations, 5+ experiments, 10+ meetings with execs and 20+ design jams.</p>
+        </div>
+        <figure class="cs-figure">
+          <iframe class="grid-paper" src="grab/services.html" title="Animation: The redesigned Home, Transport, Food, Mart and Express pages, all with the same header, tabs and search" loading="lazy" tabindex="-1"></iframe>
+        </figure>
+        <div class="cs-prose">
+          <p>I left while we were still running experiments, before the full redesign shipped, so this page shows the vision and the first rounds of experiments, not a launch. The results so far were promising enough that we expected the full redesign to raise transactions and discovery on the homepage.</p>
+          <p>A homepage this big never stops changing, and Grab’s has been through several versions since. What I didn’t expect was to see Uber move its app to service-first navigation later on, the same direction we landed on here. It still uses it today.</p>
+        </div>
+      </section>
+
+      <section class="cs-section" id="what-id-tell-myself" aria-labelledby="what-id-tell-myself-title">
+        <div class="cs-prose">
+          <h2 class="cs-h" id="what-id-tell-myself-title">What I’d tell myself</h2>
+          <p><strong>Align early.</strong> Run the workshop before the first design, and bring leadership and the cross-functional teams into it. People back a solution they helped make.</p>
+          <p><strong>Watch new users’ data.</strong> People who knew the old homepage need time to get used to the new one. New users never saw the old one, so their numbers show what the design can do without the shock of change.</p>
+          <p><strong>Get to the vision design as soon as you can.</strong> Small experiments answer one question at a time, but they can’t tell you if the whole thing works. Only the full design in people’s hands can.</p>
+        </div>
+      </section>
+
+      <dl class="cs-meta" aria-label="Project details">
+        <div><dt>Role</dt><dd>Lead designer, from the first workshop to implementation</dd></div>
+        <div><dt>Year</dt><dd>2023</dd></div>
+        <div><dt>Project type</dt><dd>Homepage redesign, information architecture, experimentation</dd></div>
+      </dl>
+      <!-- /story -->
+    </article>
+  </main>
+
+  <nav class="container cs-next" aria-label="More work">
+    <p class="eyebrow">Next</p>
+    <p class="display">01 / One design system for Fay, on iOS, Android and web <span class="cs-soon">Coming soon</span></p>
+    <p class="contact-links lede"><a href="../#work">All work</a><a href="mailto:iamannaskopenko@gmail.com">Email me</a></p>
+  </nav>
+
+  <script type="module" src="../brand.js"></script>
+  <script type="module" src="../case.js"></script>
+</body>
+</html>

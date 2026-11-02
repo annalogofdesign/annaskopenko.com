@@ -1,0 +1,34 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<!-- The five core service homepages before the redesign, above the same five after it, rebuilt from
+     the "All pages" slide in Anna's portfolio deck with the screens larger. Drawn at 1600×1000. -->
+<style>
+@font-face{font-family:"Inter Tight";src:url("../../fonts/inter-tight-latin.woff2") format("woff2");font-weight:100 900}
+*{box-sizing:border-box;margin:0}
+html,body{width:1600px;height:1000px;overflow:hidden}
+html{background:transparent}
+body{transform-origin:0 0;position:relative;background:#173a31;color:#e6efe9;
+  font:500 15px/1.2 "Inter Tight",system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase}
+.grid{position:absolute;left:50%;top:50%;translate:-50% -50%;display:grid;
+  grid-template-columns:auto repeat(5,196px);column-gap:60px;row-gap:34px;align-items:center}
+.label{width:110px;opacity:.75}
+img{display:block;width:196px;border-radius:12%/5.5%;box-shadow:0 20px 40px -16px rgb(0 0 0/.5)}
+/* a dotted line from each page to its redesign */
+.arrow{justify-self:center;width:0;height:46px;border-left:1.5px dotted rgb(120 200 150/.7);position:relative}
+.arrow::after{content:"";position:absolute;left:-5.5px;bottom:-1px;width:8px;height:8px;
+  border-right:1.5px solid rgb(120 200 150/.85);border-bottom:1.5px solid rgb(120 200 150/.85);rotate:45deg}
+</style></head>
+<body>
+<div class="grid">
+  <p class="label">Before</p>
+  <img src="before-home.png" alt=""><img src="before-transport.png" alt=""><img src="before-food.png" alt=""><img src="before-mart.png" alt=""><img src="before-express.png" alt="">
+  <span></span>
+  <span class="arrow"></span><span class="arrow"></span><span class="arrow"></span><span class="arrow"></span><span class="arrow"></span>
+  <p class="label">After</p>
+  <img src="screen-home.png" alt=""><img src="screen-transport.png" alt=""><img src="screen-food.png" alt=""><img src="screen-mart.png" alt=""><img src="screen-express.png" alt="">
+</div>
+<script>
+  const fit = () => { document.body.style.transform = `scale(${innerWidth / 1600})`; };
+  fit(); addEventListener('resize', fit);
+</script>
+</body></html>

@@ -196,6 +196,9 @@ a { color: inherit; }
   list-style: none;
 }
 .tag--caps { text-transform: uppercase; }
+/* In a Coming soon tag's place once a case study is live: same size, inked so it reads as the way in */
+.tag.tag--link { background: var(--ink); color: var(--bg); text-decoration: none; transition: opacity 150ms ease-out; }
+@media (hover: hover) { .case:hover .tag.tag--link { opacity: 0.85; } }
 .tag {
   padding: 6px 8px;
   background: var(--tag-bg);
@@ -535,6 +538,17 @@ a { color: inherit; }
 .case .tags { margin-top: 16px; }
 .case-title { font-size: clamp(39px, calc(58 * var(--u)), 58px); }
 .case-title a { text-decoration: none; }
+a.case-media { display: block; }
+/* A live case study: the title's link covers the whole row, and hovering the row underlines the
+   title and lifts the phones a little */
+.case:has(.case-title a) { position: relative; }
+.case-title a::after { content: ""; position: absolute; inset: 0; }
+.case-media .tile-phones { transition: scale 300ms cubic-bezier(0.23, 1, 0.32, 1); }
+@media (hover: hover) {
+  .case:has(.case-title a):hover .case-title a { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.12em; }
+  .case:has(.case-title a):hover .tile-phones { scale: 1.03; }
+}
+@media (prefers-reduced-motion: reduce) { .case-media .tile-phones { transition: none; } }
 .case-status { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; }
 
 .case-media {
@@ -840,6 +854,19 @@ a { color: inherit; }
     radial-gradient(50% 60% at 55% 95%, #5fa987, transparent),
     #c3d8c0;
 }
+/* A transparent image named stage-* fills the same stage, cropped to it */
+.cs-figure:has(> img[src^="grab/stage-"]) {
+  display: block;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='g' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' seed='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.3 0 0 0 0 0.24 0 0 0 0 0.16 0 0 0 0.4 -0.166'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E") 0 0 / 240px 240px,
+    radial-gradient(40% 60% at 15% 25%, #8fc7a0, transparent),
+    radial-gradient(45% 70% at 88% 30%, #d9dfa9, transparent),
+    radial-gradient(50% 60% at 55% 95%, #5fa987, transparent),
+    #c3d8c0;
+}
+.cs-figure > img[src^="grab/stage-"] { display: block; width: 100%; height: 100%; object-fit: cover; }
 .cs-figure > img[src^="grab/"][src$=".gif"] {
   height: 85%; /* about half the recordings' 808px on desktop, so they stay sharp */
   width: auto;
