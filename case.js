@@ -23,3 +23,15 @@ if (links.length) {
   addEventListener('resize', sync);
   sync();
 }
+
+// Screen recordings: silent and looping, like the GIFs they replace. They load and play only while on
+// screen, and under reduced motion they stay on their first frame
+const still = matchMedia('(prefers-reduced-motion: reduce)');
+const recordings = [...document.querySelectorAll('.cs-figure video')];
+if (recordings.length && !still.matches) {
+  const watch = new IntersectionObserver((entries) => entries.forEach(({ target, isIntersecting }) => {
+    if (isIntersecting) target.play().catch(() => {}); // Low Power Mode refuses: the first frame stays
+    else target.pause();
+  }), { rootMargin: '200px 0px' });
+  recordings.forEach((v) => watch.observe(v));
+}

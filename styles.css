@@ -909,8 +909,8 @@ a.case-media { display: block; }
   pointer-events: none;
 }
 /* Screen recordings sit on the case's card background at the animations' 16:10, rounded like the
-   card's phones. The Grab GIFs are only 372px wide, so they stay small */
-.cs-figure:has(> img[src^="grab/"][src$=".gif"]) {
+   card's phones. The Grab recordings are only 372px wide, so they stay small */
+.cs-figure:has(> :is(img[src^="grab/"][src$=".gif"], video[src^="grab/"])) {
   display: grid;
   place-items: center;
   aspect-ratio: 16 / 10;
@@ -922,23 +922,12 @@ a.case-media { display: block; }
     radial-gradient(50% 60% at 55% 95%, #5fa987, transparent),
     #c3d8c0;
 }
-/* A transparent image named stage-* fills the same stage, cropped to it */
-.cs-figure:has(> img[src^="grab/stage-"]) {
-  display: block;
-  aspect-ratio: 16 / 10;
-  overflow: hidden;
-  background:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='g' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' seed='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.3 0 0 0 0 0.24 0 0 0 0 0.16 0 0 0 0.4 -0.166'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E") 0 0 / 240px 240px,
-    radial-gradient(40% 60% at 15% 25%, #8fc7a0, transparent),
-    radial-gradient(45% 70% at 88% 30%, #d9dfa9, transparent),
-    radial-gradient(50% 60% at 55% 95%, #5fa987, transparent),
-    #c3d8c0;
-}
-.cs-figure > img[src^="grab/stage-"] { display: block; width: 100%; height: 100%; object-fit: cover; }
-.cs-figure > img[src^="grab/"][src$=".gif"] {
+.cs-figure > :is(img[src^="grab/"][src$=".gif"], video[src^="grab/"]) {
   height: 85%; /* about half the recordings' 808px on desktop, so they stay sharp */
   width: auto;
   max-height: 600px;
+  aspect-ratio: 371 / 807;
+  object-fit: cover;
   border-radius: 12% / 5.5%; /* rounder than the card's, to cut off the recording's black frame */
   box-shadow: 0 12px 24px -8px rgb(30 25 60 / 0.35);
 }
