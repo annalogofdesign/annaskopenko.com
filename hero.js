@@ -378,3 +378,20 @@ async function init(hero) {
 
 const hero = document.querySelector('[data-hero]');
 if (hero) init(hero);
+
+// The hero's paper holds a whole number of large squares, so its bottom edge lands on a major line like
+// the top one. Each large square is a whole pixel (about 110–130px, so cells of 22–26px) and the hero is
+// at most a few pixels shorter than its natural height. Measured from the window, never from the result
+const paper = document.querySelector('.hero');
+if (paper) {
+  const fitGrid = () => {
+    paper.style.minHeight = '';
+    const natural = paper.offsetHeight;
+    const majors = Math.max(1, Math.round(natural / 120));
+    const major = Math.floor(natural / majors);
+    paper.style.setProperty('--grid-cell', `${major / 5}px`);
+    paper.style.minHeight = `${major * majors}px`;
+  };
+  fitGrid();
+  addEventListener('resize', fitGrid);
+}
