@@ -559,8 +559,10 @@ a { color: inherit; }
 .case-media--fay,
 .case-media--grab { container-type: inline-size; overflow: hidden; }
 .case-media--fay { background: #3a2e24; }
+/* The hero's paper grain over the stand-in */
 .case-media--grab {
   background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='g' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' seed='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.3 0 0 0 0 0.24 0 0 0 0 0.16 0 0 0 0.4 -0.166'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E") 0 0 / 240px 240px,
     radial-gradient(40% 60% at 15% 25%, #8fc7a0, transparent),
     radial-gradient(45% 70% at 88% 30%, #d9dfa9, transparent),
     radial-gradient(50% 60% at 55% 95%, #5fa987, transparent),
