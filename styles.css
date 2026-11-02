@@ -545,6 +545,7 @@ a { color: inherit; }
   margin-top: clamp(0px, calc(65 * var(--u)), 65px);
 }
 .case-media > img { position: absolute; }
+.case-media > .tile-photo { inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .case-media--iris,
 .case-media--fay {
   background: oklch(0.975 0.012 281.1);
@@ -557,13 +558,7 @@ a { color: inherit; }
 /* Stand-ins for real photos */
 .case-media--fay,
 .case-media--grab { container-type: inline-size; overflow: hidden; }
-.case-media--fay {
-  background:
-    radial-gradient(40% 60% at 20% 30%, #b7c9a2, transparent),
-    radial-gradient(45% 70% at 85% 25%, #e8cfa8, transparent),
-    radial-gradient(50% 60% at 60% 90%, #c98f6b, transparent),
-    #d8d3c2;
-}
+.case-media--fay { background: #3a2e24; }
 .case-media--grab {
   background:
     radial-gradient(40% 60% at 15% 25%, #8fc7a0, transparent),
