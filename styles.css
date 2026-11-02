@@ -889,7 +889,9 @@ a { color: inherit; }
   .case, .about-intro, .away, .contact-grid { grid-template-columns: minmax(0, 1fr); }
   .case-meta, .case-media, .about-copy, .portrait { padding-top: 0; margin-top: 0; }
   .portrait { max-width: 480px; }
-  .away-map-wrap { max-width: 442px; min-height: 0; aspect-ratio: 442 / 470; }
+  /* The map sets its own height from its viewBox; Safari can collapse an aspect-ratio box with only absolute children */
+  .away-map-wrap { max-width: 442px; min-height: 0; align-self: start; }
+  .away-map { position: relative; height: auto; }
   /* The map scales down on phones; its labels stay readable */
   .map-stop { font-size: 16px; }
   .map-note, .map-ocean { font-size: 17px; }
