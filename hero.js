@@ -12,7 +12,8 @@ const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
 const dur = (ms) => (reduced ? 0 : ms);
 
-const STAMP_INTERVAL = 520;
+const STAMP_INTERVAL = 340; // was 520: the set lands in about 2.2s, so the first visit doesn't read as loading
+const FIRST_STAMP = 150; // after the data is in
 const PRESS_DURATION = 265;
 const NOTE_HOLD = 4500;
 const CLOSING_DELAY = 700; // after the last press settles
@@ -373,7 +374,7 @@ async function init(hero) {
     layer.append(stamp);
     press(stamp);
     if (i === stamps.length - 1) setTimeout(() => hand.start(stamps), PRESS_DURATION);
-  }, 500 + i * STAMP_INTERVAL));
+  }, FIRST_STAMP + i * STAMP_INTERVAL));
 }
 
 const hero = document.querySelector('[data-hero]');
