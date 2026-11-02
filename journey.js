@@ -43,7 +43,7 @@ export const JOURNEY = [
   {
     key: 'southamerica', status: 'current', x: 10, y: 62, rot: 1, ink: 'green',
     note: 'Anna is travelling South America, October to January.',
-    top: 'En ruta', mark: { word: 'South America' }, date: '15 Oct 2026',
+    top: 'En ruta', mark: { word: 'South America' }, date: '13 Oct 2026',
     frames: { mixed: 'oval', passport: 'rect', postmark: 'circle' },
   },
 ];
