@@ -622,7 +622,7 @@ a { color: inherit; }
   flex: 1;
   min-width: 0;
   align-self: center;
-  border-radius: 14% / 6.4%;
+  border-radius: 8% / 3.7%; /* the screen corners in the Fay photo */
   box-shadow: 0 12px 24px -8px rgb(30 25 60 / 0.35);
 }
 
