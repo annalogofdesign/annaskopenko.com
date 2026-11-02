@@ -18,6 +18,19 @@
   <link rel="preload" href="fonts/newsreader-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/newsreader-italic-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/manrope-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <!-- Everything the hero's stamps and the wordmark need, asked for at once instead of one after another -->
+  <link rel="preload" href="fonts/inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="modulepreload" href="journey.js">
+  <link rel="modulepreload" href="stamp-render.js">
+  <link rel="modulepreload" href="wordmark.js">
+  <link rel="modulepreload" href="monogram.js">
+  <link rel="modulepreload" href="ink.js">
+  <link rel="preload" href="data/stamps.config.json" as="fetch" crossorigin>
+  <link rel="preload" href="data/wordmark.config.json" as="fetch" crossorigin>
+  <link rel="preload" href="assets/logos/risd.svg" as="fetch" crossorigin>
+  <link rel="preload" href="assets/logos/stratasys.svg" as="fetch" crossorigin>
+  <link rel="preload" href="assets/logos/grab.svg" as="fetch" crossorigin>
+  <link rel="preload" href="assets/logos/fay.svg" as="fetch" crossorigin>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -104,7 +117,7 @@
           </svg>
           <div class="iris-sheet">
             <div class="iris-blueprint"></div>
-            <img class="iris-mark" src="assets/work/iris-mark-3d.png" alt="The Iris mark on its construction drawing, beside a sheet of its type, tokens and button" loading="lazy">
+            <img class="iris-mark" src="assets/work/iris-mark-3d.webp" alt="The Iris mark on its construction drawing, beside a sheet of its type, tokens and button" loading="lazy">
           </div>
         </div>
       </article>
@@ -126,7 +139,7 @@
           </div>
         </div>
         <div class="case-media case-media--fay">
-          <img class="tile-photo" src="assets/work/fay-thumb.jpg" width="1240" height="799" alt="Fay's home screen in light and dark mode, beside a woman smiling at her phone" loading="lazy">
+          <img class="tile-photo" src="assets/work/fay-thumb.webp" width="1240" height="799" alt="Fay's home screen in light and dark mode, beside a woman smiling at her phone" loading="lazy">
         </div>
       </article>
 
@@ -146,8 +159,8 @@
         </div>
         <a class="case-media case-media--grab" href="work/grab.html" tabindex="-1" aria-hidden="true">
           <div class="tile-phones">
-            <img class="tile-phone" src="assets/work/grab-1.png" alt="" loading="lazy">
-            <img class="tile-phone" src="assets/work/grab-2.png" alt="" loading="lazy">
+            <img class="tile-phone" src="assets/work/grab-1.webp" alt="" loading="lazy">
+            <img class="tile-phone" src="assets/work/grab-2.webp" alt="" loading="lazy">
           </div>
         </a>
       </article>
@@ -165,7 +178,7 @@
           </div>
           <p class="tag">open to staff / principal IC opportunities from march 2027</p>
         </div>
-        <div class="portrait"><img src="assets/work/portrait.jpg" alt="Anna Skopenko" loading="lazy"></div>
+        <div class="portrait"><img src="assets/work/portrait.webp" alt="Anna Skopenko" loading="lazy"></div>
       </div>
 
       <div class="away">
