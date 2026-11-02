@@ -213,6 +213,13 @@ a { color: inherit; }
   place-items: center;
   overflow: hidden;
   isolation: isolate;
+  /* The paper ends on a ruled line, drawn like the top edge: a major and a minor line together */
+  box-shadow: inset 0 -1px 0 var(--grid-line-major), inset 0 -1px 0 var(--grid-line);
+}
+/* A whole number of squares tall, so the bottom edge lands on the grid. Up to one square shorter than
+   the window, which lets the band below show at the bottom of the screen */
+@supports (height: round(down, 100svh, 24px)) {
+  .hero { min-height: max(round(down, 100svh, var(--grid-cell)), 576px); }
 }
 
 /* Grid paper: paper grain, a major line every five cells, a minor line every cell.
