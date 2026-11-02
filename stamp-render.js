@@ -78,7 +78,8 @@ function frameSize(chapter, config) {
     const duplex = config.frames === 'postmark' && config.killerBars;
     return { frame, W: duplex ? 300 : 210, H: 210, duplex };
   }
-  return { frame, W: 240, H: chapter.bottom ? 168 : 150, duplex: false };
+  // A flat stamp can be drawn longer than the hero's: everything inside is laid out from W
+  return { frame, W: chapter.width ?? 240, H: chapter.bottom ? 168 : 150, duplex: false };
 }
 
 // Where each stamp lands, how far it tilts, and how much older chapters have faded

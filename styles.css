@@ -535,6 +535,19 @@ a { color: inherit; }
 .case-title { font-size: clamp(39px, calc(58 * var(--u)), 58px); }
 .case-title a { text-decoration: none; }
 a.case-media { display: block; }
+/* A case study still to come carries a small rubber stamp instead of a tag: the hero's ink, tilted,
+   sized to the tag it replaced */
+.soon {
+  width: 132px;
+  height: auto;
+  margin-block: -6px;
+  rotate: -5deg;
+  color: oklch(0.45 0.13 258);
+  opacity: 0.92;
+  overflow: visible;
+  font: 700 23px var(--sans);
+  letter-spacing: 3px;
+}
 /* A live case study: the title's link covers the whole row and ends in a drawn hairline arrow, the
    same weight as the hover underline, which is the cue on touch too. Hovering the row underlines the
    title, draws the arrow's line a little longer and lifts the phones a little */
@@ -753,6 +766,45 @@ a.case-media { display: block; }
 @media (hover: hover) and (pointer: fine) {
   .contact-links a { transition: text-decoration-color 150ms ease; }
   .contact-links a:hover { text-decoration-color: transparent; }
+}
+
+/* Live: the stamp and its P.S. as one pair under the headline, the links on the right
+   (decided 2026-11-02 from lab/signoff.html; see design/decisions/hero.md) */
+.contact-head { display: flex; flex-direction: column; gap: 56px; }
+.signoff-pair { --size: 210px; --tilt: -6deg; display: flex; flex-wrap: wrap; align-items: center; gap: 28px; }
+.signoff-pair .signoff-ps { max-width: 30ch; }
+/* On phones the links come first and the stamp signs off below them */
+@media (max-width: 860px) {
+  .contact-head { display: contents; }
+  .signoff-pair { order: 1; margin-top: 24px; }
+}
+
+/* The stamp at the end, pressed onto the contact block by signoff.js: placed from
+   data/signoff.config.json, its P.S. beside it. The ink multiplies, so type stays legible through it */
+.contact { position: relative; }
+.signoff { position: absolute; display: flex; align-items: center; gap: var(--gap, 18px); width: max-content; }
+.signoff--left { flex-direction: row-reverse; text-align: right; }
+.signoff--below { flex-direction: column; text-align: center; }
+.signoff--above { flex-direction: column-reverse; text-align: center; }
+.signoff-stamp { display: block; flex: none; width: var(--size, 210px); line-height: 0; opacity: var(--ink, 0.86); }
+.signoff-stamp svg { display: block; width: 100%; height: auto; rotate: var(--tilt, -6deg); }
+.signoff[data-overprint] .signoff-stamp { mix-blend-mode: multiply; }
+.signoff-ps { margin: 0; max-width: 30ch; font-size: 15px; line-height: 1.45; opacity: 0.8; }
+.signoff-ps a { text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
+/* Or a column of its own: headline, then the links, then the stamp with its P.S. */
+/* Shared lines: all three columns start together, the links drop to the P.S.'s last line, and the
+   stamp and its P.S. share one left edge, flush with the right margin */
+.contact-grid--signoff { grid-template-columns: minmax(0, 5fr) minmax(0, 4fr) minmax(0, 3fr); }
+.contact-grid--signoff .contact-side { justify-content: space-between; }
+.signoff--column { position: static; width: auto; align-self: start; justify-self: stretch; align-items: flex-start; text-align: left; }
+.signoff--column .signoff-stamp { width: min(var(--size), 100%); }
+.signoff--column .signoff-ps { max-width: none; }
+/* Or two: what's next on the left, the stamp and its P.S. on the right half */
+.contact-main { display: flex; flex-direction: column; gap: 40px; }
+.contact-grid--pair .signoff--column { justify-self: end; width: min(var(--size), 100%); }
+.contact-grid--pair .signoff-stamp { width: 100%; }
+@media (max-width: 860px) {
+  .signoff { position: static; flex-direction: row; flex-wrap: wrap; text-align: left; margin-top: 56px; width: auto; }
 }
 
 /* ---------- Case study page ---------- */
