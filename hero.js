@@ -3,9 +3,10 @@
 // carries the next chapter's stamp, so visitors stamp their way through in order; once all
 // seven are stamped, a closing line points on to the work.
 // The stamps themselves come from site/lab/stamps.html: journey.js is the content,
-// data/stamps.config.json the look, stamp-render.js draws them.
+// data/stamps.config.json the look, stamp-render.js draws them. route.js draws the dotted route between them.
 
 import { JOURNEY } from './journey.js';
+import { stampRoute } from './route.js';
 import { DEFAULT_CONFIG, layoutJourney, loadLogos, stampSVG } from './stamp-render.js';
 
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -233,11 +234,13 @@ function stampInHand(hero, { layout, config, logos, onStamp }) {
     follow();
   }
 
+  // True when this was the next chapter, so the journey moved on
   function advance(i) {
-    if (!fine || i !== next) return; // touch and keyboard stamp in any order
+    if (!fine || i !== next) return false; // touch and keyboard stamp in any order
     stamps[next].removeAttribute('data-next');
     next += 1;
     stamps[next]?.setAttribute('data-next', '');
+    return true;
   }
 
   if (fine) {
@@ -310,6 +313,7 @@ async function init(hero) {
   const layer = hero.querySelector('.stamps');
   const note = stampNote(hero);
   const closing = closingLine(hero);
+  const route = stampRoute(hero);
   const instant = reduced || seenThisSession();
   let placed = layoutJourney(JOURNEY, config);
   let stamps = [];
@@ -321,7 +325,7 @@ async function init(hero) {
     stamp.setAttribute('data-fresh', '');
     press(stamp, true);
     thud();
-    hand.advance(i);
+    if (hand.advance(i)) route.reach(i + 1);
     stamped.add(i);
     const last = stamped.size === stamps.length && closing.prepare();
     const shown = note.show(stamp, JOURNEY[i].note, { instant: keyboard }); // keyboard presses don't animate the text
@@ -360,26 +364,22 @@ async function init(hero) {
         stamped.clear();
         layer.replaceChildren(...stamps);
         hand.start(stamps);
+        route.start(stamps);
       },
     }));
   }
 
-  // PROTO path-guide (dev only): localhost:4321/?proto=path. Remove with site/proto/path/
-  if (local && new URLSearchParams(location.search).get('proto') === 'path') {
-    import('./proto/path/harness.js').then(({ mount }) => mount(hero));
-  }
-  // /PROTO path-guide
-
   if (instant) {
     layer.append(...stamps);
     hand.start(stamps);
+    route.start(stamps);
     return;
   }
 
   stamps.forEach((stamp, i) => setTimeout(() => {
     layer.append(stamp);
     press(stamp);
-    if (i === stamps.length - 1) setTimeout(() => hand.start(stamps), PRESS_DURATION);
+    if (i === stamps.length - 1) setTimeout(() => { hand.start(stamps); route.start(stamps); }, PRESS_DURATION);
   }, FIRST_STAMP + i * STAMP_INTERVAL));
 }
 
