@@ -1,0 +1,145 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:Newsreader;src:url(../../fonts/newsreader-latin.woff2);font-weight:200 800}
+@font-face{font-family:Newsreader;font-style:italic;src:url(../../fonts/newsreader-italic-latin.woff2);font-weight:200 800}
+@font-face{font-family:Manrope;src:url(../../fonts/manrope-400-latin.woff2)}
+*{box-sizing:border-box;margin:0}
+html,body{width:1600px;height:1000px;overflow:hidden}
+html{background:transparent}
+body{transform-origin:0 0}
+body{background:transparent;color:#1d2a30;font-family:Manrope,sans-serif;position:relative}
+.mono{font-family:ui-monospace,"SF Mono",Menlo,monospace}
+
+#phone{position:absolute;left:300px;top:60px;width:407px;height:882px;border-radius:52px;overflow:hidden;
+  box-shadow:0 1px 2px rgba(29,42,48,.08),0 30px 60px -24px rgba(29,42,48,.28);outline:1px solid rgba(29,42,48,.10)}
+#phone img{position:absolute;inset:0;width:100%;height:100%;display:block}
+#dark{clip-path:inset(0 100% 0 0)}
+#seam{position:absolute;top:0;bottom:0;width:2px;background:#7b6cff;box-shadow:0 0 18px 2px rgba(123,108,255,.7);opacity:0}
+
+.ring{position:absolute;border:2px solid #7b6cff;opacity:0;pointer-events:none}
+#ringCard{left:326px;top:310px;width:356px;height:170px;border-radius:24px}
+#dot1,#dot2{position:absolute;width:12px;height:12px;border-radius:50%;background:#7b6cff;border:3px solid #f9f7f0;box-sizing:content-box;margin:-9px 0 0 -9px}
+svg#lines{position:absolute;inset:0;pointer-events:none}
+
+.toggle{position:absolute;left:820px;top:150px;display:flex;gap:0;border:1px solid rgba(29,42,48,.2);border-radius:999px;padding:4px;font-size:17px;letter-spacing:.02em}
+.toggle span{padding:8px 22px;border-radius:999px}
+
+.label{position:absolute;left:820px;width:640px;opacity:0}
+.label .tok{font-size:26px;letter-spacing:-.01em}
+.label .use{font-family:Newsreader;font-style:italic;font-weight:300;font-size:26px;line-height:1.25;color:#55636a;margin-top:6px}
+.label .val{display:flex;align-items:center;gap:12px;margin-top:16px;font-size:18px;color:#1d2a30}
+.sw{width:30px;height:30px;border-radius:8px;border:1px solid rgba(29,42,48,.25)}
+#L1{top:300px}#L2{top:590px}
+.caption{position:absolute;left:820px;bottom:70px;font-size:15px;letter-spacing:.14em;text-transform:uppercase;color:#7a868b}
+</style></head>
+<body>
+<div id="phone"><img src="home-light.png"><img id="dark" src="home-dark.png"><div id="seam"></div></div>
+<div class="ring" id="ringCard"></div>
+<svg id="lines" width="1600" height="1000">
+  <path id="ln1" d="" fill="none" stroke="#7b6cff" stroke-width="2"/>
+  <path id="ln2" d="" fill="none" stroke="#7b6cff" stroke-width="2"/>
+</svg>
+<div id="dot1"></div><div id="dot2"></div>
+
+<div class="toggle"><span id="tL">Light</span><span id="tD">Dark</span></div>
+
+<div class="label" id="L1">
+  <div class="tok mono">surface/one</div>
+  <div class="use">Cards, sheets, anything that floats</div>
+  <div class="val"><div class="sw" id="sw1"></div><span class="mono" id="v1">neutral/white</span></div>
+</div>
+<div class="label" id="L2">
+  <div class="tok mono">surface/bg/standard</div>
+  <div class="use">The page behind every screen</div>
+  <div class="val"><div class="sw" id="sw2"></div><span class="mono" id="v2">neutral/white</span></div>
+</div>
+<div class="caption">Iris · Fay home screen</div>
+
+<script>
+const S=407/369; // image scale
+const P={x:300,y:60};
+const pt=(x,y)=>[P.x+x*S,P.y+y*S];
+const card=pt(338,300), page=pt(358,470);
+const clamp=v=>Math.max(0,Math.min(1,v));
+const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+const out=t=>1-Math.pow(1-t,3);
+const seg=(t,a,b)=>clamp((t-a)/(b-a));
+const mix=(a,b,k)=>a.map((v,i)=>Math.round(v+(b[i]-v)*k));
+const rgb=c=>`rgb(${c})`;
+const W=[255,255,255], D1=[43,44,54], D2=[29,30,40];
+const $=id=>document.getElementById(id);
+const tL=$('tL'),tD=$('tD');
+
+function place(){
+  const l1y=300+18, l2y=590+18;
+  $('ln1').setAttribute('d',`M${card[0]} ${card[1]} H760 L790 ${l1y} H808`);
+  $('ln2').setAttribute('d',`M${page[0]} ${page[1]} H760 L790 ${l2y} H808`);
+  $('dot1').style.left=card[0]+'px';$('dot1').style.top=card[1]+'px';
+  $('dot2').style.left=page[0]+'px';$('dot2').style.top=page[1]+'px';
+  for(const id of ['ln1','ln2']){const p=$(id),L=p.getTotalLength();p.style.strokeDasharray=L;p.dataset.L=L;}
+}
+function setLine(id,dot,k){const p=$(id);p.style.strokeDashoffset=p.dataset.L*(1-k);$(dot).style.opacity=k>0?1:0;$(dot).style.transform=`scale(${.4+.6*k})`;}
+
+const DUR=8.4;
+window.render=function(t){
+  t=t%DUR;
+  // intro of annotations
+  const a1=out(seg(t,.2,.9)), a2=out(seg(t,.45,1.15));
+  setLine('ln1','dot1',a1);setLine('ln2','dot2',a2);
+  for(const [id,k] of [['L1',out(seg(t,.5,1.1))],['L2',out(seg(t,.75,1.35))]]){
+    const e=$(id);e.style.opacity=k;e.style.transform=`translateY(${(1-k)*10}px)`;}
+  // theme wipe: to dark 2.2-3.3, back 6.6-7.7
+  const k=ease(seg(t,2.2,3.3))*(1-ease(seg(t,6.6,7.7)));
+  const goingBack=t>=6.6;
+  // wipe direction: left->right to dark, right->left back
+  $('dark').style.clipPath=`inset(0 ${(1-k)*100}% 0 0)`;
+  const seam=$('seam');seam.style.left=(k*407-1)+'px';
+  seam.style.opacity=(k>0.01&&k<0.99)?1:0;
+  // toggle: the selected pill crossfades
+  const kt=clamp((k-.42)/.16);
+  const on=(e,v)=>{e.style.background=`rgba(29,42,48,${v})`;e.style.color=v>.5?'#f9f7f0':'#1d2a30';};
+  on(tL,1-kt);on(tD,kt);
+  // swatches follow the wipe, card first (it sits left of the page sample)
+  const kc=clamp((k*407-(card[0]-P.x))/40+.5), kp=clamp((k*407-(page[0]-P.x))/40+.5);
+  $('sw1').style.background=rgb(mix(W,D1,kc));$('sw2').style.background=rgb(mix(W,D2,kp));
+  $('v1').textContent=kc>.5?'neutral/800':'neutral/white';
+  $('v2').textContent=kp>.5?'neutral/black':'neutral/white';
+  // highlight the lifted card while dark holds
+  const r=seg(t,3.5,4.1)*(1-seg(t,5.9,6.4));
+  $('ringCard').style.opacity=out(r);
+  $('ringCard').style.transform=`scale(${1.03-.03*out(r)})`;
+};
+document.fonts.ready.then(()=>{place();render(0);window.ready=true;});
+</script>
+<script>
+// Played live on the case study page, over the page's grid paper: scale the 1600×1000 drawing
+// to the frame, run it only while it's on screen, and hold one frame under reduced motion
+(() => {
+  const STILL = 4.6;
+  const fit = () => { document.body.style.transform = `scale(${innerWidth / 1600})`; };
+  addEventListener('resize', fit);
+  fit();
+  // ?t=4.2 holds that moment, for checking a frame
+  const at = new URLSearchParams(location.search).get('t');
+  const still = at !== null || matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let visible = false, raf, last, t = 0;
+  const loop = (now) => {
+    t += last === undefined ? 0 : (now - last) / 1000;
+    last = now;
+    render(t);
+    raf = requestAnimationFrame(loop);
+  };
+  const start = () => {
+    if (still) return render(at !== null ? Number(at) : STILL);
+    if (!visible || raf) return;
+    last = undefined;
+    raf = requestAnimationFrame(loop);
+  };
+  const stop = () => { cancelAnimationFrame(raf); raf = undefined; };
+  new IntersectionObserver(([e]) => { visible = e.isIntersecting; visible ? start() : stop(); })
+    .observe(document.documentElement);
+  document.fonts.ready.then(start);
+})();
+</script>
+</body></html>

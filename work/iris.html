@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Iris design system at Fay — Anna Skopenko</title>
+  <meta name="description" content="One design system for Fay, on iOS, Android and web. I pitched Iris and led it until I left in August 2026.">
+  <link rel="preload" href="../fonts/newsreader-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../fonts/newsreader-italic-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../fonts/manrope-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="cs-page">
+  <a class="skip-link" href="#intro">Skip to the story</a>
+
+  <header class="cs-bar">
+    <div class="container cs-bar-inner">
+      <a class="dock-name" href="../" data-wordmark="0.78">anna skopenko</a>
+      <a class="cs-back" href="../#work">All work</a>
+    </div>
+  </header>
+
+  <!-- The words come from iris.md: tools/build_cases.py rewrites the toc and story blocks below.
+       Edit iris.md, not those blocks. -->
+  <main class="container cs-layout">
+    <aside class="cs-rail">
+      <div class="cs-rail-product">
+        <p class="cs-rail-name">Iris</p>
+        <p>Fay’s design system for iOS, Android and web</p>
+      </div>
+      <nav aria-label="On this page">
+        <ol class="cs-toc">
+          <!-- toc -->
+          <li><a href="#intro">Intro</a></li>
+          <li><a href="#buying-someone-elses-mistakes">Buying someone else’s mistakes</a></li>
+          <li><a href="#one-change-two-clicks">One change, two clicks</a></li>
+          <li><a href="#naming-things-by-their-job">Naming things by their job</a></li>
+          <li><a href="#docs-that-check-my-work">Docs that check my work</a></li>
+          <li><a href="#three-platforms-one-set-of-tokens">Three platforms, one set of tokens</a></li>
+          <!-- /toc -->
+        </ol>
+      </nav>
+      <a class="cs-rail-link" href="https://www.faynutrition.com">faynutrition.com</a>
+    </aside>
+
+    <article class="cs-main" data-eyebrow="01 / Iris">
+      <!-- story -->
+      <header class="cs-head">
+        <p class="eyebrow">01 / Iris</p>
+        <h1 class="display cs-title">One design system for Fay, on iOS, Android and web</h1>
+      </header>
+
+      <figure class="cs-figure">
+        <iframe src="iris/cover-blueprint.html" title="Animation: The Iris mark&#x27;s construction drawing draws itself in on purple, the 3D mark lands on top of it, and the Fay home screen beside it turns from light to dark" tabindex="-1"></iframe>
+      </figure>
+
+      <section class="cs-section" id="intro" aria-label="Introduction">
+        <div class="cs-prose">
+          <p>Fay connects people with dietitians covered by their insurance. Patients book and track their care in our iOS and Android apps and on the web. When I started this work in April 2026, the marketing site, the web product and the mobile app each ran on its own design system. None of them shared tokens, so the same color or radius lived somewhere different in each one.</p>
+          <p>I pitched a design system overhaul and led it until I left in August. Five months of work is too much for one page, so here are the highlights of how things went!</p>
+          <p>Nobody could change a color in one place, so people copied whatever was closest. Our web code alone ended up with 123 buttons written by hand, and that was just one symptom. Then our engineers started building with AI, and the copying sped up. As Don (our awesome Android engineer and my closest partner on this project) put it in Slack about AI-written code: “Given access to all the LEGO, it built everything slightly differently, faster.”</p>
+          <p>So I built the system toward one dream: if AI only gets a small set of parts to build with, a person can actually review what it makes. We didn’t get all the way there before I left, but every step pointed there.</p>
+        </div>
+        <figure class="cs-figure">
+          <iframe class="grid-paper" src="iris/buttons.html" title="Animation: 123 hand-written buttons with three corner radii collapse into one Iris button with five variants and five states" loading="lazy" tabindex="-1"></iframe>
+        </figure>
+      </section>
+
+      <section class="cs-section" id="buying-someone-elses-mistakes" aria-labelledby="buying-someone-elses-mistakes-title">
+        <div class="cs-prose">
+          <h2 class="cs-h" id="buying-someone-elses-mistakes-title">Buying someone else’s mistakes</h2>
+          <p>I’d never built a design system from scratch. So I found someone who has done it before at a large company. Because our team was very small, my first plan was to hire her to build ours. After talking to her and understanding her rate, I changed the ask. I realized that what we really wanted were the mistakes she’d already made somewhere else. And with AI and the right processes, the manual work would go faster even with a small team.</p>
+          <p>I pitched our CTO on about 25 hours of the contractor’s time to audit what we had, sketch the token structure and help strategize the process of the overhaul. He said yes on one condition: check in after two weeks and make sure she’s worth it. She was. I took it from there, named it Iris, and gave it a little brand. Suddenly it felt like a real project. Teams talked about it, and people name-dropped Iris in conversations I wasn’t part of. It gave me hope, but it also made me feel more responsible for what I was asking of people: some budget, and a lot of designers’ and engineers’ time. I had to advocate for at least 20 hours a week from one engineer. Instead of three engineers learning the same mistakes at once, I asked to start with just Don, figure out the workflows together, and then bring in the others. But it was happening and the deeper I went into it, the clearer the path seemed.</p>
+        </div>
+      </section>
+
+      <section class="cs-section" id="one-change-two-clicks" aria-labelledby="one-change-two-clicks-title">
+        <div class="cs-prose">
+          <h2 class="cs-h" id="one-change-two-clicks-title">One change, two clicks</h2>
+          <p>Before Iris, changing one color took seven manual steps across three repos and two Figma libraries. With Iris, I published a change once and a pull request opened on iOS, Android and web by itself. Don’s review of the first one: “Checks pass, code compiles, updates are safe. Approve and merge. Two clicks.”</p>
+        </div>
+        <figure class="cs-figure">
+          <iframe class="grid-paper" src="iris/release.html" title="Animation: A designer changes one color token in Tokens Studio and hits release; Style Dictionary rewrites it for Swift, Kotlin and CSS, and pull requests open, pass their checks and merge on iOS, Android and web" loading="lazy" tabindex="-1"></iframe>
+        </figure>
+      </section>
+
+      <section class="cs-section" id="naming-things-by-their-job" aria-labelledby="naming-things-by-their-job-title">
+        <div class="cs-prose">
+          <h2 class="cs-h" id="naming-things-by-their-job-title">Naming things by their job</h2>
+          <p>In light mode, a card and the page behind it are both white. In dark mode the card has to get lighter, because shadows disappear. They look identical in one theme and different in the other, so they can’t share a name. That’s why we named every token for the job it does. “Card” became “surface/one”. “Button” became “action”, because a link or an icon can be an action too, so one token covers all of them.</p>
+        </div>
+        <figure class="cs-figure">
+          <iframe class="grid-paper" src="iris/surfaces.html" title="Animation: The Fay home screen switching between light and dark, with its two surface tokens labelled" loading="lazy" tabindex="-1"></iframe>
+        </figure>
+      </section>
+
+      <section class="cs-section" id="docs-that-check-my-work" aria-labelledby="docs-that-check-my-work-title">
+        <div class="cs-prose">
+          <h2 class="cs-h" id="docs-that-check-my-work-title">Docs that check my work</h2>
+          <p>I built components with Claude Code reading and writing Figma directly. Before it wrote any documentation, my prompt asked it to flag anything unnamed, misused or hard-coded. So writing the docs doubled as an audit.</p>
+          <p>AI took the repetitive half of the job. I spent the time I got back on structure and naming, and then ran a workshop so the other designers could work the same way.</p>
+        </div>
+        <figure class="cs-figure">
+          <iframe class="grid-paper" src="iris/docs.html" title="Animation: Claude Code reads a Badge component in Figma and flags three problems before writing anything; the designer fixes each one, the run comes back clean, and the Badge documentation page writes itself into Notion" loading="lazy" tabindex="-1"></iframe>
+        </figure>
+      </section>
+
+      <section class="cs-section" id="three-platforms-one-set-of-tokens" aria-labelledby="three-platforms-one-set-of-tokens-title">
+        <div class="cs-prose">
+          <h2 class="cs-h" id="three-platforms-one-set-of-tokens-title">Three platforms, one set of tokens</h2>
+          <p>By August, iOS and Android had moved onto Iris, and token changes were shipping to all three platforms from one release. The web pipeline had merged eight pull requests. We had 24 components and 186 icons in the system. Web components were next on the list when I left.</p>
+          <p>Design systems don’t get applause. I did this one because the product and the teams deserved it, and I got to do it next to people who wanted the same thing.</p>
+          <p class="cs-credits">Cathryn (the amazing contractor) did the first audit and high-level token structure. I built the rest of it. Don (Android), Cassie (iOS) and Joey (web) built the pipelines on Android, iOS and web, and the designers Tori and Ling tested the new system with their projects and updated the system when needed.</p>
+        </div>
+      </section>
+
+      <dl class="cs-meta" aria-label="Project details">
+        <div><dt>Role</dt><dd>Design lead. I started Iris and led it</dd></div>
+        <div><dt>Year</dt><dd>2026</dd></div>
+        <div><dt>Project type</dt><dd>Design system, design engineering, AI workflow</dd></div>
+        <div><dt>Tools</dt><dd>Figma, Tokens Studio, Claude Code, Notion, a lot of renaming</dd></div>
+      </dl>
+      <!-- /story -->
+    </article>
+  </main>
+
+  <nav class="container cs-next" aria-label="More work">
+    <p class="eyebrow">Next</p>
+    <p class="display">02 / Designing the Fay mobile experience 0→1 <span class="cs-soon">Coming soon</span></p>
+    <p class="contact-links lede"><a href="../#work">All work</a><a href="mailto:iamannaskopenko@gmail.com">Email me</a></p>
+  </nav>
+
+  <script type="module" src="../brand.js"></script>
+  <script type="module" src="../case.js"></script>
+</body>
+</html>

@@ -246,8 +246,8 @@ a { color: inherit; }
       url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='g' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' seed='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.3 0 0 0 0 0.24 0 0 0 0 0.16 0 0 0 0.4 -0.166'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E"),
       linear-gradient(var(--grid-line-major) 1px, transparent 1px),
       linear-gradient(90deg, var(--grid-line-major) 1px, transparent 1px),
-      repeating-linear-gradient(var(--grid-line) 0 1px, transparent 1px 20%),
-      repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 20%);
+      repeating-linear-gradient(var(--grid-line) 0 1px, transparent 1px calc(100% / var(--grid-major, 5))),
+      repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px calc(100% / var(--grid-major, 5)));
     background-size:
       240px 240px,
       calc(var(--grid-cell) * 5) calc(var(--grid-cell) * 5),
@@ -917,11 +917,10 @@ a.case-media { display: block; }
 }
 .cs-credits { opacity: 0.75; }
 
-.cs-figure { margin: 0; }
+.cs-figure { margin: 0; container-type: inline-size; }
 /* The animations are drawn at 1600×1000 and play live over the grid paper (work/iris/*.html).
    They're shown at roughly half size, so the paper's squares shrink with them */
 .cs-figure iframe {
-  --grid-cell: 14px;
   display: block;
   width: 100%;
   aspect-ratio: 16 / 10;
@@ -929,6 +928,34 @@ a.case-media { display: block; }
   outline: 1px solid rgb(0 0 0 / 0.06);
   outline-offset: -1px;
   pointer-events: none;
+}
+/* The paper fits the frame in whole squares instead of a fixed 14px one, which got cut off at the right
+   and bottom: 64 × 40 at 16:10 with a major line every four, then a closing line on those two edges.
+   Phones get half as many squares so they don't turn to mesh */
+.cs-figure iframe.grid-paper {
+  --grid-major: 4;
+  --cols: 64;
+  --rows: 40;
+  background-size:
+    240px 240px,
+    calc(100% * var(--grid-major) / var(--cols)) calc(100% * var(--grid-major) / var(--rows)),
+    calc(100% * var(--grid-major) / var(--cols)) calc(100% * var(--grid-major) / var(--rows)),
+    calc(100% / var(--cols)) calc(100% / var(--rows)),
+    calc(100% / var(--cols)) calc(100% / var(--rows));
+  box-shadow: inset -1px -1px 0 var(--grid-line-major);
+}
+@container (max-width: 560px) {
+  .cs-figure iframe.grid-paper { --cols: 32; --rows: 20; }
+}
+@media (pointer: coarse) {
+  .cs-figure iframe.grid-paper {
+    background-size:
+      240px 240px,
+      calc(100% * var(--grid-major) / var(--cols)) calc(100% * var(--grid-major) / var(--rows)),
+      calc(100% * var(--grid-major) / var(--cols)) calc(100% * var(--grid-major) / var(--rows)),
+      calc(100% * var(--grid-major) / var(--cols)) calc(100% * var(--grid-major) / var(--rows)),
+      calc(100% * var(--grid-major) / var(--cols)) calc(100% * var(--grid-major) / var(--rows));
+  }
 }
 /* Screen recordings sit on the case's card background at the animations' 16:10, rounded like the
    card's phones. The Grab recordings are only 372px wide, so they stay small */

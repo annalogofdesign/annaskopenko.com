@@ -1,0 +1,195 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<!-- Iris case study, "Docs that check my work": the standing prompt runs on one component,
+     flags what's wrong first, and only writes the Notion page once the component is clean.
+     Drawn at 1600×1000 like the other Iris animations; render(t) draws any moment. -->
+<style>
+@font-face{font-family:Manrope;src:url(../../fonts/manrope-400-latin.woff2)}
+*{box-sizing:border-box;margin:0}
+html,body{width:1600px;height:1000px;overflow:hidden}
+html{background:transparent}
+body{transform-origin:0 0}
+body{background:transparent;color:#1d2a30;font-family:Manrope,-apple-system,sans-serif;position:relative}
+.mono{font-family:ui-monospace,"SF Mono",Menlo,monospace}
+.abs{position:absolute}
+.cap{left:96px;top:72px;font-size:26px;letter-spacing:.01em}
+.cap small{display:block;font-family:Manrope;font-size:17px;letter-spacing:.14em;text-transform:uppercase;color:#7a868b;margin-bottom:10px}
+.panel{background:#fff;border:1.5px solid rgba(29,42,48,.12);border-radius:22px;box-shadow:0 1px 2px rgba(29,42,48,.05),0 18px 40px -24px rgba(29,42,48,.25)}
+.head{font-size:19px;letter-spacing:.12em;text-transform:uppercase;color:#7a868b}
+
+/* Figma */
+#A{left:96px;top:230px;width:440px;height:650px;padding:32px}
+#canvas{margin-top:20px;height:126px;border-radius:14px;background:#f4f3f0;display:flex;align-items:center;justify-content:center}
+#badge{display:flex;align-items:center;gap:10px;height:48px;padding:0 20px;background:#efedff;color:#5145d8;font-size:22px}
+#badge svg{flex:none}
+.sub{margin-top:22px;font-size:16px;letter-spacing:.12em;text-transform:uppercase;color:#7a868b}
+.item{position:relative;margin-top:8px;display:flex;justify-content:space-between;align-items:center;height:44px;padding:0 14px;border-radius:10px;font-size:19px;border:2px solid transparent}
+.item .v{font-size:18px;color:#5b6870}
+.item .n{position:absolute;left:-14px;top:50%;width:26px;height:26px;margin-top:-13px;border-radius:50%;background:#d39a2a;color:#fff;font-size:15px;display:flex;align-items:center;justify-content:center;opacity:0}
+
+/* Claude Code */
+#B{left:584px;top:230px;width:470px;height:650px;padding:30px 30px;background:#1d2a30;color:#e8ecef;border-color:#1d2a30}
+#B .head{color:#8d9aa1}
+#term{margin-top:20px;font-size:17px;line-height:1.5;white-space:pre-wrap}
+#term .me{color:#b9b1ff}
+#term .warn{color:#f0b54a}
+#term .ok{color:#7ad1a4}
+#term .dim{color:#8d9aa1}
+#term .fix{text-decoration:line-through;text-decoration-color:rgba(232,236,239,.5);color:#8d9aa1}
+
+/* Notion */
+#C{left:1102px;top:230px;width:402px;height:650px;padding:32px}
+#doc h1{margin-top:20px;font-weight:400;font-size:34px}
+.sec{margin-top:22px}
+.sec h4{font-weight:400;font-size:19px;margin-bottom:8px}
+.sec p{font-size:16px;line-height:1.45;color:#5b6870}
+.bar{height:10px;border-radius:5px;background:#e9e7e2;margin-top:8px}
+#wait{margin-top:24px;font-size:18px;color:#a3adb2}
+
+#cursor{position:absolute;left:0;top:0;width:34px;height:34px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25))}
+#ring{position:absolute;width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;border:2.5px solid #6a5cff;opacity:0}
+</style></head>
+<body>
+<div class="abs cap" id="c1"><small>Claude Code</small><span class="mono">Flags first, before any docs</span></div>
+<div class="abs cap" id="c2"><small>Design</small><span class="mono">Fix what it flags, run it again</span></div>
+<div class="abs cap" id="c3"><small>Notion</small><span class="mono">Then it writes the page</span></div>
+
+<div class="abs panel" id="A">
+  <p class="head">Figma · Badge</p>
+  <div id="canvas"><div id="badge">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 2.5l2.2 4.6 5 .6-3.7 3.4 1 5-4.5-2.5-4.5 2.5 1-5L2.8 7.7l5-.6z" stroke-linejoin="round"/></svg>
+    <span>New</span></div></div>
+  <p class="sub">Layers</p>
+  <div class="item" id="i0"><span class="k mono">Frame 427</span><span class="v">icon slot</span><span class="n">1</span></div>
+  <div class="item"><span class="k mono">label</span><span class="v">text</span></div>
+  <p class="sub">Properties</p>
+  <div class="item"><span>Fill</span><span class="v mono">tone/brand/bg</span></div>
+  <div class="item" id="i1"><span>Text</span><span class="v mono">action/ghost/fg</span><span class="n">2</span></div>
+  <div class="item" id="i2"><span>Radius</span><span class="v mono">6</span><span class="n">3</span></div>
+</div>
+
+<div class="abs panel" id="B">
+  <p class="head">Claude Code</p>
+  <div id="term" class="mono"></div>
+</div>
+
+<div class="abs panel" id="C">
+  <p class="head">Notion · Iris / Components</p>
+  <p id="wait">Waiting for a clean run</p>
+  <div id="doc">
+    <h1 id="d0">Badge</h1>
+    <div class="sec" id="d1"><h4>Structure</h4><p>Icon slot, label. One icon, left or right.</p><div class="bar" style="width:86%"></div></div>
+    <div class="sec" id="d2"><h4>Tokens used</h4><p class="mono">tone/brand/bg · fg/brand · radius/full</p><div class="bar" style="width:64%"></div></div>
+    <div class="sec" id="d3"><h4>Props</h4><p class="mono">tone · size · leftIcon | rightIcon</p><div class="bar" style="width:74%"></div></div>
+    <div class="sec" id="d4"><h4>Do / Don’t</h4><div class="bar" style="width:92%"></div><div class="bar" style="width:58%"></div></div>
+  </div>
+</div>
+
+<div id="ring"></div>
+<svg id="cursor" viewBox="0 0 24 24"><path d="M5 2.5v17.2l4.6-4.3 2.9 6.6 2.9-1.3-2.9-6.5h6.3z" fill="#1d2a30" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></svg>
+
+<script>
+const clamp=v=>Math.max(0,Math.min(1,v));
+const seg=(t,a,b)=>clamp((t-a)/(b-a));
+const out=t=>1-Math.pow(1-t,3);
+const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+const lerp=(a,b,k)=>a+(b-a)*k;
+const $=id=>document.getElementById(id);
+const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+
+const PROMPT='> Here’s my Figma link: figma.com/…/Badge. Make human and AI readable .md documentation. Flag to me first if anything isn’t named, you think I’ve misused a token, or any values are hard-coded.';
+const FLAGS=['1. Layer “Frame 427” isn’t named','2. Text uses action/ghost/fg, which is for buttons','3. Radius 6 is hard-coded'];
+const FLAG_AT=[2.6,3.0,3.4];          // each flag prints, and its row lights up
+const FIX_AT=[4.3,5.2,6.1];           // the designer fixes it
+const FIXED=[['icon',null],[null,'fg/brand'],[null,'radius/full']];
+
+// where the cursor goes: each flagged row, measured from the layout once fonts are in
+let ROWS=[];
+function pos(el){let x=0,y=0;for(let e=el;e&&e!==document.body;e=e.offsetParent){x+=e.offsetLeft;y+=e.offsetTop;}return [x,y,el.offsetWidth,el.offsetHeight];}
+function place(){ROWS=['i0','i1','i2'].map(id=>{const [x,y,w,h]=pos($(id));return [x+w-60,y+h/2];});}
+function cursorAt(t){
+  const P=[[0,470,950],[3.6,470,950]];
+  FIX_AT.forEach((f,i)=>{P.push([f-.5,...ROWS[i]],[f+.25,...ROWS[i]]);});
+  P.push([7.0,540,950]);
+  for(let i=0;i<P.length-1;i++){const [t0,x0,y0]=P[i],[t1,x1,y1]=P[i+1];
+    if(t<=t1){const k=ease(seg(t,t0,t1));return [lerp(x0,x1,k),lerp(y0,y1,k)];}}
+  return P[P.length-1].slice(1);
+}
+
+const DUR=13;
+window.render=function(t){
+  t=t%DUR;
+  document.body.style.opacity=(1-seg(t,12.3,12.9))*out(seg(t,0,.5));
+
+  const cap=(id,a,b)=>{const k=out(seg(t,a,a+.5))*(1-seg(t,b,b+.35));const e=$(id);e.style.opacity=k;e.style.transform=`translateY(${(1-k)*8}px)`;};
+  cap('c1',.3,3.7);cap('c2',3.9,7.0);cap('c3',7.2,12.6);
+
+  // the terminal: prompt types, flags print, fixes strike through, then a clean run
+  const typedN=Math.round(PROMPT.length*seg(t,.6,2.2));
+  let html=`<span class="me">${esc(PROMPT.slice(0,typedN))}</span>`;
+  if(t>=2.4) html+=`\n\n<span class="warn">3 things to fix first:</span>`;
+  FLAGS.forEach((f,i)=>{ if(t>=FLAG_AT[i]) html+=`\n<span class="${t>=FIX_AT[i]+.1?'fix':''}">${esc(f)}</span>`; });
+  if(t>=6.6) html+=`\n\n<span class="me">${esc('> Run it again'.slice(0,Math.round(14*seg(t,6.6,7.0))))}</span>`;
+  if(t>=7.3) html+=`\n<span class="ok">✓ Clean. Nothing to flag.</span>`;
+  if(t>=7.7) html+=`\n<span class="dim">Writing Badge into Notion…</span>`;
+  if(t>=10.2) html+=`\n<span class="ok">✓ Done</span>`;
+  $('term').innerHTML=html;
+
+  // the Figma rows: amber while flagged, green as they're fixed, then quiet
+  ['i0','i1','i2'].forEach((id,i)=>{
+    const e=$(id), on=t>=FLAG_AT[i], fixed=t>=FIX_AT[i];
+    const settle=seg(t,FIX_AT[i]+.3,FIX_AT[i]+1.1);
+    e.style.borderColor=!on?'transparent':fixed?`rgba(31,122,82,${1-settle})`:'#d39a2a';
+    e.style.background=!on?'transparent':fixed?`rgba(31,122,82,${.08*(1-settle)})`:'rgba(211,154,42,.08)';
+    const n=e.querySelector('.n');n.style.opacity=on&&!fixed?out(seg(t,FLAG_AT[i],FLAG_AT[i]+.25)):0;
+    const [k,v]=FIXED[i];
+    if(k) e.querySelector('.k').textContent=fixed?k:'Frame 427';
+    if(v) e.querySelector('.v').textContent=fixed?v:(i===1?'action/ghost/fg':'6');
+  });
+  // the radius fix is the one you can see: the badge becomes a pill
+  $('badge').style.borderRadius=lerp(6,24,out(seg(t,FIX_AT[2],FIX_AT[2]+.4)))+'px';
+
+  // Notion fills in once the run is clean
+  $('wait').style.opacity=1-seg(t,7.6,7.9);
+  ['d0','d1','d2','d3','d4'].forEach((id,i)=>{const k=out(seg(t,7.9+i*.55,8.3+i*.55));const e=$(id);e.style.opacity=k;e.style.transform=`translateY(${(1-k)*10}px)`;});
+
+  // the cursor and its clicks
+  const [cx,cy]=cursorAt(t);
+  $('cursor').style.transform=`translate(${cx-7}px,${cy-4}px)`;
+  $('cursor').style.opacity=out(seg(t,3.6,3.9))*(1-seg(t,6.6,7.0));
+  let rk=0;for(const c of FIX_AT){const k=seg(t,c,c+.45);if(k>0&&k<1)rk=k;}
+  const ring=$('ring');ring.style.left=cx+'px';ring.style.top=cy+'px';ring.style.opacity=rk?(1-rk)*.9:0;ring.style.transform=`scale(${.5+rk})`;
+};
+document.fonts.ready.then(()=>{place();render(0);window.ready=true;});
+</script>
+<script>
+// Played live on the case study page, over the page's grid paper: scale the 1600×1000 drawing
+// to the frame, run it only while it's on screen, and hold one frame under reduced motion
+(() => {
+  const STILL = 11;
+  const fit = () => { document.body.style.transform = `scale(${innerWidth / 1600})`; };
+  addEventListener('resize', fit);
+  fit();
+  // ?t=4.2 holds that moment, for checking a frame
+  const at = new URLSearchParams(location.search).get('t');
+  const still = at !== null || matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let visible = false, raf, last, t = 0;
+  const loop = (now) => {
+    t += last === undefined ? 0 : (now - last) / 1000;
+    last = now;
+    render(t);
+    raf = requestAnimationFrame(loop);
+  };
+  const start = () => {
+    if (still) return render(at !== null ? Number(at) : STILL);
+    if (!visible || raf) return;
+    last = undefined;
+    raf = requestAnimationFrame(loop);
+  };
+  const stop = () => { cancelAnimationFrame(raf); raf = undefined; };
+  new IntersectionObserver(([e]) => { visible = e.isIntersecting; visible ? start() : stop(); })
+    .observe(document.documentElement);
+  document.fonts.ready.then(() => { place(); start(); });
+})();
+</script>
+</body></html>
