@@ -767,19 +767,38 @@ a.case-media { display: block; }
   margin-inline: 5px 0;
   border-radius: 50%;
   background: var(--now);
-  box-shadow: 0 0 0 5px oklch(0.5 0.11 155 / 0.18);
+  box-shadow: 0 0 0 2.5px var(--sand), 0 0 0 4px var(--now);
 }
 /* Stretches to the height of the text beside it; the SVG crops to fill */
 .away-map-wrap { position: relative; align-self: stretch; min-height: 470px; outline: 1px solid rgb(0 0 0 / 0.1); outline-offset: -1px; background: oklch(0.925 0.012 116.8); }
 .away-map { position: absolute; inset: 0; display: block; width: 100%; height: 100%; }
-.map-land { fill: oklch(0.965 0.008 116.8); stroke: oklch(0.87 0.012 116.8); stroke-width: 0.75; stroke-linejoin: round; }
-.map-route { fill: none; stroke: var(--ink); stroke-width: 1.25; stroke-dasharray: 2 4; stroke-linecap: round; stroke-linejoin: round; }
-.map-past { fill: var(--bg); stroke: var(--ink); stroke-width: 1.25; }
-.map-now { fill: var(--now); }
-.map-halo { fill: oklch(0.5 0.11 155 / 0.18); }
+.map-land { fill: oklch(0.965 0.008 116.8); stroke: oklch(0.8 0.015 116.8); stroke-width: 0.75; stroke-linejoin: round; }
+/* Paper grain over the map, so the stamped marks sit on something with a surface */
+.away-map-wrap::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='g' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.57' numOctaves='3' seed='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.3 0 0 0 0 0.24 0 0 0 0 0.16 0 0 0 0.4 -0.166'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  background-size: 240px 240px;
+  opacity: 0.55;
+}
+.map-route { fill: none; stroke: var(--ink); stroke-width: 1.6; stroke-dasharray: 0.1 5; stroke-linecap: round; stroke-linejoin: round; }
+/* Each stop is a ring-and-dot stamp; the inks are the stamp-pad ones in stamp-render.js */
+.map-pin circle:first-child { fill: none; stroke: currentColor; stroke-width: 1.5; }
+.map-pin circle:last-child { fill: currentColor; }
+.map-pin--blue { color: oklch(0.45 0.13 258); }
+.map-pin--navy { color: oklch(0.23 0.028 219.7); }
+.map-pin--violet { color: oklch(0.42 0.14 298); }
+.map-pin--now { color: var(--now); }
+.map-pin--now circle:first-child { stroke-width: 1.6; }
+.map-now-stamp { color: var(--now); }
+.map-now-stamp rect { fill: none; stroke: currentColor; stroke-width: 1.3; }
+.map-now-stamp .map-now-stamp-inner { stroke-width: 0.5; }
+.map-now-stamp text { font: 700 8.5px var(--sans); letter-spacing: 0.14em; fill: currentColor; }
 .map-stop { font: 400 13px var(--sans); letter-spacing: 0.01em; fill: var(--ink); }
 .map-stop--now { font-weight: 700; }
-.map-note { font: italic 400 14px var(--serif); fill: var(--ink); opacity: 0.7; }
 .map-header { position: absolute; inset: 24px 24px auto; z-index: 1; display: flex; justify-content: space-between; font: 700 11px var(--sans); letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.8; }
 .map-ocean { font: italic 400 14px var(--serif); fill: var(--ink); opacity: 0.5; }
 .map-locator { fill: oklch(0.965 0.008 116.8); }
@@ -1068,7 +1087,8 @@ a.case-media { display: block; }
   .away-map { position: relative; height: auto; }
   /* The map scales down on phones; its labels stay readable */
   .map-stop { font-size: 16px; }
-  .map-note, .map-ocean { font-size: 17px; }
+  .map-ocean { font-size: 17px; }
+  .map-now-stamp { transform-box: fill-box; transform-origin: left bottom; transform: scale(1.25); }
   .hero-nav ul { gap: 10px; font-size: 14px; }
   .hero-nav li + li::before { margin-right: 10px; }
 }
