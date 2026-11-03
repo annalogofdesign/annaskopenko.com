@@ -590,16 +590,18 @@ a.case-media { display: block; }
 }
 .case-arrow-shaft { transform-box: view-box; transform-origin: 1px 9px; transition: scale 300ms cubic-bezier(0.23, 1, 0.32, 1); }
 .case-arrow-head { transition: translate 300ms cubic-bezier(0.23, 1, 0.32, 1); }
-.case-media .tile-phones { transition: scale 300ms cubic-bezier(0.23, 1, 0.32, 1); }
+.case-media .tile-phones,
+.case-media .iris-mark { transition: scale 300ms cubic-bezier(0.23, 1, 0.32, 1); }
 @media (hover: hover) {
   .case:has(.case-title a):hover .case-title a { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.12em; }
   .case:has(.case-title a):hover .case-arrow-shaft { scale: 1.2 1; }
   .case:has(.case-title a):hover .case-arrow-head { translate: 7px 0; }
   .case:has(.case-title a):hover .tile-phones { scale: 1.03; }
+  .case:has(.case-title a):hover .iris-mark { scale: 1.06; }
 }
 .case:has(.case-title a:focus-visible) .case-arrow-shaft { scale: 1.2 1; }
 .case:has(.case-title a:focus-visible) .case-arrow-head { translate: 7px 0; }
-@media (prefers-reduced-motion: reduce) { .case-arrow-shaft, .case-arrow-head, .case-media .tile-phones { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .case-arrow-shaft, .case-arrow-head, .case-media .tile-phones, .case-media .iris-mark { transition: none; } }
 .case-status { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; }
 
 .case-media {
@@ -648,15 +650,17 @@ a.case-media { display: block; }
   inset: 0;
   background: #5f48f6;
   opacity: 0.55;
-  -webkit-mask: url("assets/work/iris-blueprint.webp") center / contain no-repeat;
-  mask: url("assets/work/iris-blueprint.webp") center / contain no-repeat;
+  /* Only the frame, labels and construction lines: the drawn petals are wider than the 3D mark's and
+     its aperture is cut through, so the drawn flower would show around and inside it */
+  -webkit-mask: url("assets/work/iris-blueprint-frame.webp") center / contain no-repeat;
+  mask: url("assets/work/iris-blueprint-frame.webp") center / contain no-repeat;
 }
 /* Measured so the 3D mark lands on its drawing */
 .iris-mark {
   position: absolute;
   left: 0.333%; top: -3.1%;
   width: 99.222%;
-  scale: 1.02; /* just past the drawing, so its lines don't peek out */
+  scale: 1.02;
   max-width: none;
   filter: drop-shadow(0 12px 18px rgb(60 40 160 / 0.22));
 }
