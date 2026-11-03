@@ -95,6 +95,7 @@ export function layoutJourney(journey, config) {
       x: chapter.x + jx,
       narrowX: (chapter.narrowX ?? chapter.x) + jx,
       y: chapter.y + jy,
+      narrowY: (chapter.narrowY ?? chapter.y) + jy,
       rotate: chapter.rot * tilt * config.rotation,
       width: frameSize(chapter, config).W * 0.8 * config.size,
       opacity: config.inkOpacity * Math.max(0.1, 1 - (config.ageFade * age) / (journey.length - 1)),

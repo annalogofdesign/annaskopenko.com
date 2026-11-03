@@ -333,12 +333,12 @@ async function init(hero) {
 
   const makeStamps = () => {
     placed = layoutJourney(JOURNEY, config);
-    return placed.map(({ chapter, x, narrowX, y, rotate, width, opacity }, i) => {
+    return placed.map(({ chapter, x, narrowX, y, narrowY, rotate, width, opacity }, i) => {
       const stamp = document.createElement('button');
       stamp.type = 'button';
       stamp.className = 'stamp';
       stamp.setAttribute('aria-label', chapter.note);
-      stamp.style.cssText = `--x:${x}%; --x-narrow:${narrowX}%; --rest:${opacity}; top:${y}%; width:calc(${width} * var(--u-stamp)); rotate:${rotate}deg; opacity:${opacity}`;
+      stamp.style.cssText = `--x:${x}%; --x-narrow:${narrowX}%; --y:${y}%; --y-narrow:${narrowY}%; --rest:${opacity}; width:calc(${width} * var(--u-stamp)); rotate:${rotate}deg; opacity:${opacity}`;
       stamp.innerHTML = `<span class="stamp-inner">${stampSVG(chapter, config, logos)}</span>`;
       stamp.addEventListener('click', (e) => {
         if (hand.handles(e)) return;

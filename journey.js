@@ -1,11 +1,12 @@
 // The chapters of my journey, in order. The hero and the stamp lab both read this.
 // status: 'left' for chapters I've moved on from (exit stamp), 'current' for the one I'm in (entry stamp).
 // x/y are % of the hero, rot is the resting direction of the tilt.
-// narrowX replaces x on phones, where the same percentages leave the row lopsided.
+// narrowX and narrowY replace x and y on phones, where the same percentages leave the row lopsided
+// and the stamps don't read as one ring.
 
 export const JOURNEY = [
   {
-    key: 'ukraine', status: 'left', x: 11, y: 24, rot: -1, ink: 'blue',
+    key: 'ukraine', status: 'left', x: 11, narrowX: 17, y: 24, narrowY: 30, rot: -1, ink: 'blue',
     note: 'Anna was born and raised in Ukraine.',
     top: 'Origin', mark: { word: 'Ukraine', sub: 'Україна' }, date: 'Left 2012',
     frames: { mixed: 'rect', passport: 'rect', postmark: 'squared' },
@@ -17,13 +18,13 @@ export const JOURNEY = [
     frames: { mixed: 'circle', passport: 'circle', postmark: 'circle' },
   },
   {
-    key: 'stratasys', status: 'left', x: 82, y: 18, rot: -1, ink: 'navy',
+    key: 'stratasys', status: 'left', x: 82, narrowX: 80, y: 18, narrowY: 28, rot: -1, ink: 'navy',
     note: 'Anna’s first job: product designer at Stratasys.',
     top: 'First job', bottom: 'Product designer', mark: { logo: 'stratasys' }, date: '2016–2019',
     frames: { mixed: 'postage', passport: 'rect', postmark: 'circle' },
   },
   {
-    key: 'singapore', status: 'left', x: 88, y: 66, rot: -1, ink: 'red',
+    key: 'singapore', status: 'left', x: 88, narrowX: 82, y: 66, rot: -1, ink: 'red',
     note: 'Anna lived in Singapore for five years.',
     top: 'Home for 5 years', mark: { word: 'Singapore', emblem: 'crescent' }, date: '2019–2023',
     frames: { mixed: 'rect', passport: 'rect', postmark: 'squared' },
@@ -41,7 +42,7 @@ export const JOURNEY = [
     frames: { mixed: 'rect', passport: 'rect', postmark: 'squared' },
   },
   {
-    key: 'southamerica', status: 'current', x: 10, y: 62, rot: 1, ink: 'green',
+    key: 'southamerica', status: 'current', x: 10, narrowX: 17, y: 62, narrowY: 65, rot: 1, ink: 'green',
     note: 'Anna is travelling South America, October to January.',
     top: 'En ruta', mark: { word: 'South America' }, date: '13 Oct 2026',
     frames: { mixed: 'oval', passport: 'rect', postmark: 'circle' },

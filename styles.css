@@ -349,6 +349,7 @@ a { color: inherit; }
 .stamp {
   position: absolute;
   left: var(--x);
+  top: var(--y);
   translate: -50% -50%;
   appearance: none;
   padding: 0;
@@ -513,7 +514,9 @@ a { color: inherit; }
   .stamp[data-next] { animation: none; opacity: calc(var(--rest) + 0.28) !important; }
 }
 @media (max-width: 640px) {
-  .stamp { left: var(--x-narrow); }
+  /* Stamps hit --u's floor on phones and their lettering goes unreadable, so they're drawn larger */
+  :root { --u-stamp: calc(min(var(--u), calc(max(100svh, 560px) / 982)) * 1.3); }
+  .stamp { left: var(--x-narrow); top: var(--y-narrow); }
   /* Narrow enough to pass between the stamps on either side of it */
   .hero-closing { width: min(30ch, 54vw); }
   .dock-inner { justify-content: center; }
