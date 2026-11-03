@@ -364,6 +364,12 @@ async function init(hero) {
     }));
   }
 
+  // PROTO path-guide (dev only): localhost:4321/?proto=path. Remove with site/proto/path/
+  if (local && new URLSearchParams(location.search).get('proto') === 'path') {
+    import('./proto/path/harness.js').then(({ mount }) => mount(hero));
+  }
+  // /PROTO path-guide
+
   if (instant) {
     layer.append(...stamps);
     hand.start(stamps);

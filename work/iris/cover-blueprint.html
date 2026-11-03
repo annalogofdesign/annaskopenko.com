@@ -11,8 +11,12 @@ body{transform-origin:0 0;position:relative;overflow:hidden;
   background:linear-gradient(135deg,#6a5cff 0%,#5f48f6 55%,#5638ec 100%)}
 .abs{position:absolute}
 /* same margin above, below and to the right of the drawing's frame */
-#blue{left:650px;top:50px;width:900px;height:900px;background:#fff;opacity:.9;
-  -webkit-mask:url(iris-mark-blueprint.png) center/contain no-repeat;mask:url(iris-mark-blueprint.png) center/contain no-repeat}
+/* The drawing comes in two layers. The 3D mark's petals are slimmer than the drawn ones and its
+   aperture is cut through, so the drawn flower would show around and inside it: that layer fades out
+   as the mark lands, and the frame, labels and construction lines stay */
+#blue,#petals{left:650px;top:50px;width:900px;height:900px;background:#fff;opacity:.9}
+#blue{-webkit-mask:url(iris-mark-blueprint-frame.png) center/contain no-repeat;mask:url(iris-mark-blueprint-frame.png) center/contain no-repeat}
+#petals{-webkit-mask:url(iris-mark-blueprint-flower.png) center/contain no-repeat;mask:url(iris-mark-blueprint-flower.png) center/contain no-repeat}
 /* Measured so the 3D mark lands on its drawing: the drawing's centre lines cross at (499, 442) of
    its 1000px image, its outer ring is r 130 and its petal tips r 321; the 3D mark's centre is
    (379.5, 361.5) of 760px, ring r 98.5, tips r 248.5. Hence 893px, centred on (1099, 448) */
@@ -24,7 +28,8 @@ body{transform-origin:0 0;position:relative;overflow:hidden;
 </style></head>
 <body>
 <div class="abs" id="blue"></div>
-<img src="iris-mark-blueprint.png" alt="" hidden><!-- loads the mask before the drawing starts -->
+<div class="abs" id="petals"></div>
+<img src="iris-mark-blueprint-frame.png" alt="" hidden><img src="iris-mark-blueprint-flower.png" alt="" hidden><!-- load the masks before the drawing starts -->
 <img class="abs" id="mark" src="iris-mark-3d-lg.png" alt="">
 <div class="abs" id="phone"><img src="home-light.png" alt=""><img id="dark" src="home-dark.png" alt=""></div>
 <script>
@@ -39,10 +44,11 @@ window.render=function(t){
   const w=2*Math.PI*t/DUR;
   // the construction drawing opens out from the centre, the way a compass would draw it
   const b=ease(seg(t,.2,2.4))*(1-seg(t,11.2,11.8));
-  $('blue').style.clipPath=`circle(${b*72}% at 50% 50%)`;
+  $('blue').style.clipPath=$('petals').style.clipPath=`circle(${b*72}% at 50% 50%)`;
   // the 3D mark resolves on top of its own drawing and stays there
   const m=out(seg(t,2.0,3.0))*(1-seg(t,11.0,11.6));
   $('mark').style.opacity=m;
+  $('petals').style.opacity=.9*(1-m);
   $('mark').style.transform=`translateY(${(1-m)*16}px) scale(${.94+.06*m})`; // settles exactly on its drawing
   // the app comes in once, then turns dark and back
   const p=out(seg(first,.6,1.6));
