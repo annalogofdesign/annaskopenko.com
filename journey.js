@@ -13,7 +13,7 @@ export const JOURNEY = [
   },
   {
     key: 'risd', status: 'left', x: 34, narrowX: 47, y: 20, rot: 1, ink: 'violet',
-    note: 'Anna learned to sweat the details at RISD, and graduated in 2016.',
+    note: 'Anna studied industrial design at RISD, class of 2016.',
     layout: 'seal', top: 'Rhode Island School of Design', bottom: 'Class of 2016', mark: { logo: 'risd' }, date: '2012–2016',
     frames: { mixed: 'circle', passport: 'circle', postmark: 'circle' },
   },
