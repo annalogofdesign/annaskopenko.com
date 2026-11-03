@@ -388,17 +388,23 @@ if (hero) init(hero);
 
 // The hero's paper holds a whole number of large squares, so its bottom edge lands on a major line like
 // the top one. Each large square is a whole pixel (about 110–130px, so cells of 22–26px) and the hero is
-// at most a few pixels shorter than its natural height. Measured from the window, never from the result
+// at most a few pixels shorter than its natural height. Measured from the window, never from the result.
+// The natural height comes from a marker styled inline, not from the hero: on a slow connection this can
+// run before styles.css arrives, and measuring the unstyled hero pinned it to the headline's height until
+// the next resize. The marker is also watched, so the hero refits whenever the screen height changes
 const paper = document.querySelector('.hero');
 if (paper) {
+  const natural = document.createElement('div');
+  natural.setAttribute('aria-hidden', 'true');
+  natural.style.cssText = 'position: absolute; top: 0; width: 0; height: max(100vh, 560px); height: max(100svh, 560px); visibility: hidden; pointer-events: none';
+  paper.append(natural);
   const fitGrid = () => {
-    paper.style.minHeight = '';
-    const natural = paper.offsetHeight;
-    const majors = Math.max(1, Math.round(natural / 120));
-    const major = Math.floor(natural / majors);
+    const height = natural.offsetHeight;
+    const majors = Math.max(1, Math.round(height / 120));
+    const major = Math.floor(height / majors);
     paper.style.setProperty('--grid-cell', `${major / 5}px`);
     paper.style.minHeight = `${major * majors}px`;
   };
   fitGrid();
-  addEventListener('resize', fitGrid);
+  new ResizeObserver(fitGrid).observe(natural);
 }

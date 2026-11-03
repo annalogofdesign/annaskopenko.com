@@ -982,6 +982,9 @@ a.case-media { display: block; }
 .cs-figure:has(> :is(img[src^="grab/"][src$=".gif"], video[src^="grab/"])) {
   display: grid;
   place-items: center;
+  /* Without a set width, Safari works the frame's width out from the recording's height and the 16:10
+     ratio: about 1000px on a phone, and the whole page zooms out to fit it */
+  width: 100%;
   aspect-ratio: 16 / 10;
   padding: 5% 0;
   background:
