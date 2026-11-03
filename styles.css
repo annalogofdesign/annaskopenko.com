@@ -237,6 +237,25 @@ a { color: inherit; }
     var(--grid-cell) var(--grid-cell),
     var(--grid-cell) var(--grid-cell);
 }
+/* Phones round each background layer's tile to device pixels on its own, so a 23.2px cell drifts off
+   the 116px major lines and every fifth line shows double. Drawing the minor lines inside the major
+   tile gives every layer the same tile, so they round together */
+@media (pointer: coarse) {
+  .hero, .grid-paper {
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='g' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' seed='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.3 0 0 0 0 0.24 0 0 0 0 0.16 0 0 0 0.4 -0.166'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E"),
+      linear-gradient(var(--grid-line-major) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line-major) 1px, transparent 1px),
+      repeating-linear-gradient(var(--grid-line) 0 1px, transparent 1px 20%),
+      repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 20%);
+    background-size:
+      240px 240px,
+      calc(var(--grid-cell) * 5) calc(var(--grid-cell) * 5),
+      calc(var(--grid-cell) * 5) calc(var(--grid-cell) * 5),
+      calc(var(--grid-cell) * 5) calc(var(--grid-cell) * 5),
+      calc(var(--grid-cell) * 5) calc(var(--grid-cell) * 5);
+  }
+}
 
 .hero-name {
   position: absolute;
