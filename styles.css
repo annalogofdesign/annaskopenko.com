@@ -721,7 +721,6 @@ a.case-media { display: block; }
   grid-template-columns: minmax(0, 1fr) minmax(0, 544px);
   gap: 32px;
   padding-block: clamp(40px, calc(64 * var(--u)), 64px);
-  border-top: var(--hairline) solid var(--rule);
 }
 .about-copy {
   display: flex;
@@ -734,13 +733,19 @@ a.case-media { display: block; }
 .about-copy .lede { max-width: 640px; }
 .portrait {
   position: relative;
-  aspect-ratio: 544 / 670;
+  aspect-ratio: 544 / 610;
   margin-top: clamp(0px, calc(65 * var(--u)), 65px);
-  border-radius: clamp(20px, calc(40 * var(--u)), 40px);
   overflow: hidden;
-  /* emil-surfaces: images get a 1px inset outline, pure black at 10% */
-  outline: 1px solid rgb(0 0 0 / 0.1);
-  outline-offset: -1px;
+}
+/* emil-surfaces: images get an inset hairline, pure black, as fine as the map's edge. 12% instead
+   of the usual 10%, so the photo's pale grey backdrop doesn't melt into the cream. On a layer of
+   its own: the photo is positioned, so it would paint over an outline on .portrait */
+.portrait::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 0 0 var(--hairline) rgb(0 0 0 / 0.12);
+  pointer-events: none;
 }
 .portrait img {
   position: absolute;
@@ -813,7 +818,6 @@ a.case-media { display: block; }
   gap: clamp(32px, calc(64 * var(--u)), 64px);
   margin-top: clamp(64px, calc(112 * var(--u)), 112px);
   padding-block: clamp(40px, calc(64 * var(--u)), 64px) clamp(64px, calc(128 * var(--u)), 128px);
-  border-top: var(--hairline) solid var(--rule);
 }
 .contact-grid {
   display: grid;
@@ -824,6 +828,9 @@ a.case-media { display: block; }
 .contact-side { display: flex; flex-direction: column; gap: 32px; }
 .contact-links { display: flex; gap: 32px; }
 .contact-links a {
+  /* 44px tall to tap; the margin takes the padding back so the line doesn't move */
+  padding-block: 10.5px;
+  margin-block: -10.5px;
   text-decoration-thickness: 1px;
   text-underline-offset: 0.18em;
 }
