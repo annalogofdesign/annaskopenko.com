@@ -744,14 +744,14 @@ a.case-media { display: block; }
   margin-top: clamp(0px, calc(65 * var(--u)), 65px);
   overflow: hidden;
 }
-/* emil-surfaces: images get an inset hairline, pure black, as fine as the map's edge. 12% instead
+/* emil-surfaces: images get a 1px inset edge, pure black, the same width as the map's. 12% instead
    of the usual 10%, so the photo's pale grey backdrop doesn't melt into the cream. On a layer of
    its own: the photo is positioned, so it would paint over an outline on .portrait */
 .portrait::after {
   content: "";
   position: absolute;
   inset: 0;
-  box-shadow: inset 0 0 0 var(--hairline) rgb(0 0 0 / 0.12);
+  box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.12);
   pointer-events: none;
 }
 .portrait img {
