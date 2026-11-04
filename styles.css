@@ -91,6 +91,10 @@
 
   /* 1 Figma pixel at the 1512px artboard, clamped so type stays readable */
   --u: clamp(0.4px, calc(100vw / 1512), 1.15px);
+  /* The case grid's gap, shared so the portrait and map can start on the tiles' left edge */
+  --case-gap: clamp(32px, calc(204 * var(--u)), 204px);
+  /* The map band's side padding; the portrait stops short by the same amount so the two match */
+  --band-pad: clamp(20px, calc(48 * var(--u)), 48px);
   --gutter: clamp(16px, calc(64 * var(--u)), 64px);
   /* Stamps follow whichever is tighter, width or height, so short screens get smaller stamps */
   --u-stamp: min(var(--u), calc(max(100svh, 560px) / 982));
@@ -558,7 +562,7 @@ a { color: inherit; }
   display: grid;
   grid-template-columns: minmax(0, 544fr) minmax(0, 620fr);
   justify-content: space-between;
-  column-gap: clamp(32px, calc(204 * var(--u)), 204px);
+  column-gap: var(--case-gap);
   row-gap: 32px;
   padding-block: clamp(40px, calc(64 * var(--u)), 64px);
   border-top: var(--hairline) solid var(--rule);
@@ -718,7 +722,8 @@ a.case-media { display: block; }
 
 .about-intro {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 544px);
+  /* The portrait takes the work tiles' column, so one edge runs from the tiles down to the map */
+  grid-template-columns: minmax(0, 1fr) calc((100% - var(--case-gap)) * 620 / 1164);
   gap: 32px;
   padding-block: clamp(40px, calc(64 * var(--u)), 64px);
 }
@@ -733,6 +738,8 @@ a.case-media { display: block; }
 .about-copy .lede { max-width: 640px; }
 .portrait {
   position: relative;
+  /* The map's width: same left edge, and it stops short of the column by the band's padding */
+  width: calc(100% - var(--band-pad));
   aspect-ratio: 544 / 610;
   margin-top: clamp(0px, calc(65 * var(--u)), 65px);
   overflow: hidden;
@@ -756,11 +763,11 @@ a.case-media { display: block; }
 
 .away {
   display: grid;
-  grid-template-columns: minmax(0, 816px) minmax(0, 442px);
-  justify-content: space-between;
+  /* The map starts on the tiles' left edge too; the band's padding comes off its right */
+  grid-template-columns: minmax(0, 1fr) calc((100% + 2 * var(--band-pad) - var(--case-gap)) * 620 / 1164 - var(--band-pad));
   gap: 32px;
   margin-top: clamp(64px, calc(112 * var(--u)), 112px);
-  padding: clamp(32px, calc(64 * var(--u)), 64px) clamp(20px, calc(48 * var(--u)), 48px);
+  padding: clamp(32px, calc(64 * var(--u)), 64px) var(--band-pad);
   background: var(--sand);
 }
 .away-copy { display: flex; flex-direction: column; gap: clamp(32px, calc(64 * var(--u)), 64px); }
@@ -1089,7 +1096,7 @@ a.case-media { display: block; }
 @media (max-width: 860px) {
   .case, .about-intro, .away, .contact-grid { grid-template-columns: minmax(0, 1fr); }
   .case-meta, .case-media, .about-copy, .portrait { padding-top: 0; margin-top: 0; }
-  .portrait { max-width: 480px; }
+  .portrait { width: auto; max-width: 480px; }
   /* The map sets its own height from its viewBox; Safari can collapse an aspect-ratio box with only absolute children */
   .away-map-wrap { max-width: 442px; min-height: 0; align-self: start; }
   .away-map { position: relative; height: auto; }
