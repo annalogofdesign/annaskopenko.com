@@ -667,10 +667,10 @@ a.case-media { display: block; }
   inset: 0;
   background: #5f48f6;
   opacity: 0.55;
-  /* Only the frame, labels and construction lines: the drawn petals are wider than the 3D mark's and
+  /* Only the frame, labels and construction lines, as vectors so they stay sharp: the drawn petals are wider than the 3D mark's and
      its aperture is cut through, so the drawn flower would show around and inside it */
-  -webkit-mask: url("assets/work/iris-blueprint-frame.webp") center / contain no-repeat;
-  mask: url("assets/work/iris-blueprint-frame.webp") center / contain no-repeat;
+  -webkit-mask: url("assets/work/iris-blueprint-frame.svg") center / contain no-repeat;
+  mask: url("assets/work/iris-blueprint-frame.svg") center / contain no-repeat;
 }
 /* Measured so the 3D mark lands on its drawing */
 .iris-mark {

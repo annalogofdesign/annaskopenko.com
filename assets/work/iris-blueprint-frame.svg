@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000">
+<!-- The Iris mark's construction drawing: frame, callouts, construction lines and title block, without
+     the drawn flower. Traced from iris-mark-blueprint-frame.png at the same coordinates, so the 3D mark still
+     lands on it, with the geometry made exact (the square inscribed in the circle). Used as a mask: only
+     alpha matters. Written by a one-off script; edit by hand from here. -->
+<style>
+.solid{fill:none;stroke:#fff;stroke-width:1.6}
+.frame{stroke-width:1.75}
+.title{stroke-width:1.4}
+.dash{fill:none;stroke:#fff;stroke-opacity:.6;stroke-width:1.5;stroke-dasharray:9 4}
+.circle{stroke-dasharray:12 6}
+.head{fill:#fff}
+text{fill:#fff;font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace}
+.label{font-size:13.3px}
+.dim{font-size:16px}
+.title-main{font-size:22.6px}
+.title-sub{font-size:14.3px}
+</style>
+<rect class="solid frame" x="14.75" y="14.75" width="970" height="970"/>
+<path class="dash circle" d="M820 467.3A322 322 0 0 1 524.3 763"/>
+<path class="dash circle" d="M473.7 763A322 322 0 0 1 178 467.3"/>
+<path class="dash circle" d="M178 416.7A322 322 0 0 1 473.7 121"/>
+<path class="dash circle" d="M524.3 121A322 322 0 0 1 820 416.7"/>
+<path class="dash" d="M256.3 214.3L385.3 214.3"/>
+<path class="dash" d="M612.7 214.3L892 214.3"/>
+<path class="dash" d="M256.3 669.7L385.3 669.7"/>
+<path class="dash" d="M612.7 669.7L892 669.7"/>
+<path class="dash" d="M271.3 214.3L271.3 328.3"/>
+<path class="dash" d="M271.3 555.7L271.3 821"/>
+<path class="dash" d="M726.7 214.3L726.7 328.3"/>
+<path class="dash" d="M726.7 555.7L726.7 821"/>
+<path class="dash" d="M726.7 214.3L641.8 299.2"/>
+<path class="dash" d="M271.3 669.7L356.2 584.8"/>
+<path class="dash" d="M726.7 669.7L641.8 584.8"/>
+<path class="dash" d="M119 442L168 442"/>
+<path class="dash" d="M830 442L851 442"/>
+<path class="dash" d="M499 62L499 100"/>
+<path class="dash" d="M499 783L499 827"/>
+<path class="solid" d="M873 214.3L873 412"/>
+<path class="solid" d="M873 471L873 669.7"/>
+<path class="head" d="M873 214.3L876.5 226.3L869.5 226.3Z"/>
+<path class="head" d="M873 669.7L869.5 657.7L876.5 657.7Z"/>
+<text class="dim" x="873" y="437" text-anchor="middle">2.00</text>
+<text class="dim" x="873" y="456" text-anchor="middle">DIA.</text>
+<path class="solid" d="M271.3 805L469 805"/>
+<path class="solid" d="M529 805L726.7 805"/>
+<path class="head" d="M271.3 805L283.3 801.5L283.3 808.5Z"/>
+<path class="head" d="M726.7 805L714.7 808.5L714.7 801.5Z"/>
+<text class="dim" x="499" y="809" text-anchor="middle">2.00</text>
+<text class="dim" x="499" y="828" text-anchor="middle">DIA.</text>
+<text class="label" x="115" y="147">PETAL</text>
+<text class="label" x="115" y="163.5">R 0.50</text>
+<path class="solid" d="M167.9 158.8H222L347 275"/>
+<path class="solid" d="M347 275L370 275"/>
+<path class="head" d="M372 275L360 278.5L360 271.5Z"/>
+<text class="label" x="115" y="212">OUTER RING</text>
+<text class="label" x="115" y="228.5">R 0.50</text>
+<path class="solid" d="M167.9 223.8H225L311 305"/>
+<text class="label" x="115" y="277">INNER IRIS</text>
+<text class="label" x="115" y="293.5">R 0.28</text>
+<path class="solid" d="M167.9 288.8H215L271.3 334.3"/>
+<text class="label" x="115" y="342">APERTURE</text>
+<text class="label" x="115" y="358.5">4X R 0.12</text>
+<path class="solid" d="M191.8 353.8H217L230 362"/>
+<rect class="solid title" x="46" y="851" width="301" height="100"/>
+<path class="solid title" d="M46 888L347 888"/>
+<path class="solid title" d="M46 920L347 920"/>
+<text class="title-main" x="65" y="878">IRIS MARK</text>
+<text class="title-sub" x="65" y="908.5">FRONT VIEW</text>
+<text class="title-sub" x="65" y="940.5">GEOMETRIC CONSTRUCTION</text>
+</svg>

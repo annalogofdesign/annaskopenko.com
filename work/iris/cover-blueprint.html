@@ -15,7 +15,7 @@ body{transform-origin:0 0;position:relative;overflow:hidden;
    aperture is cut through, so the drawn flower would show around and inside it: that layer fades out
    as the mark lands, and the frame, labels and construction lines stay */
 #blue,#petals{left:650px;top:50px;width:900px;height:900px;background:#fff;opacity:.9}
-#blue{-webkit-mask:url(iris-mark-blueprint-frame.png) center/contain no-repeat;mask:url(iris-mark-blueprint-frame.png) center/contain no-repeat}
+#blue{-webkit-mask:url(../../assets/work/iris-blueprint-frame.svg) center/contain no-repeat;mask:url(../../assets/work/iris-blueprint-frame.svg) center/contain no-repeat}
 #petals{-webkit-mask:url(iris-mark-blueprint-flower.png) center/contain no-repeat;mask:url(iris-mark-blueprint-flower.png) center/contain no-repeat}
 /* Measured so the 3D mark lands on its drawing: the drawing's centre lines cross at (499, 442) of
    its 1000px image, its outer ring is r 130 and its petal tips r 321; the 3D mark's centre is
@@ -29,7 +29,7 @@ body{transform-origin:0 0;position:relative;overflow:hidden;
 <body>
 <div class="abs" id="blue"></div>
 <div class="abs" id="petals"></div>
-<img src="iris-mark-blueprint-frame.png" alt="" hidden><img src="iris-mark-blueprint-flower.png" alt="" hidden><!-- load the masks before the drawing starts -->
+<img src="../../assets/work/iris-blueprint-frame.svg" alt="" hidden><img src="iris-mark-blueprint-flower.png" alt="" hidden><!-- load the masks before the drawing starts -->
 <img class="abs" id="mark" src="iris-mark-3d-lg.png" alt="">
 <div class="abs" id="phone"><img src="home-light.png" alt=""><img id="dark" src="home-dark.png" alt=""></div>
 <script>
