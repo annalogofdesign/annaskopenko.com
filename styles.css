@@ -91,10 +91,10 @@
 
   /* 1 Figma pixel at the 1512px artboard, clamped so type stays readable */
   --u: clamp(0.4px, calc(100vw / 1512), 1.15px);
-  /* The case grid's gap, shared so the portrait and map can start on the tiles' left edge */
-  --case-gap: clamp(32px, calc(204 * var(--u)), 204px);
   /* The map band's side padding; the portrait stops short by the same amount so the two match */
   --band-pad: clamp(20px, calc(48 * var(--u)), 48px);
+  /* The portrait and the map share one width: 480 at 1440 */
+  --side: calc(504 * var(--u));
   --gutter: clamp(16px, calc(64 * var(--u)), 64px);
   /* Stamps follow whichever is tighter, width or height, so short screens get smaller stamps */
   --u-stamp: min(var(--u), calc(max(100svh, 560px) / 982));
@@ -562,7 +562,7 @@ a { color: inherit; }
   display: grid;
   grid-template-columns: minmax(0, 544fr) minmax(0, 620fr);
   justify-content: space-between;
-  column-gap: var(--case-gap);
+  column-gap: clamp(32px, calc(204 * var(--u)), 204px);
   row-gap: 32px;
   padding-block: clamp(40px, calc(64 * var(--u)), 64px);
   border-top: var(--hairline) solid var(--rule);
@@ -722,8 +722,8 @@ a.case-media { display: block; }
 
 .about-intro {
   display: grid;
-  /* The portrait takes the work tiles' column, so one edge runs from the tiles down to the map */
-  grid-template-columns: minmax(0, 1fr) calc((100% - var(--case-gap)) * 620 / 1164);
+  /* The portrait's column ends at the page edge; the portrait itself stops at the map's edge */
+  grid-template-columns: minmax(0, 1fr) calc(var(--side) + var(--band-pad));
   gap: 32px;
   padding-block: clamp(40px, calc(64 * var(--u)), 64px);
 }
@@ -763,8 +763,7 @@ a.case-media { display: block; }
 
 .away {
   display: grid;
-  /* The map starts on the tiles' left edge too; the band's padding comes off its right */
-  grid-template-columns: minmax(0, 1fr) calc((100% + 2 * var(--band-pad) - var(--case-gap)) * 620 / 1164 - var(--band-pad));
+  grid-template-columns: minmax(0, 1fr) var(--side);
   gap: 32px;
   margin-top: clamp(64px, calc(112 * var(--u)), 112px);
   padding: clamp(32px, calc(64 * var(--u)), 64px) var(--band-pad);
@@ -782,8 +781,9 @@ a.case-media { display: block; }
   background: var(--now);
   box-shadow: 0 0 0 2.5px var(--sand), 0 0 0 4px var(--now);
 }
-/* Stretches to the height of the text beside it; the SVG crops to fill */
-.away-map-wrap { position: relative; align-self: stretch; min-height: 470px; outline: 1px solid rgb(0 0 0 / 0.1); outline-offset: -1px; background: oklch(0.925 0.012 116.8); }
+/* Stretches to the height of the text beside it; the SVG crops to fill. Capped so the crop never
+   narrows the map below 378 of its 442 units, the span of the stops and their names */
+.away-map-wrap { position: relative; align-self: stretch; min-height: min(470px, calc(var(--side) * 470 / 442)); max-height: calc(var(--side) * 470 / 378); outline: 1px solid rgb(0 0 0 / 0.1); outline-offset: -1px; background: oklch(0.925 0.012 116.8); }
 .away-map { position: absolute; inset: 0; display: block; width: 100%; height: 100%; }
 .map-land { fill: oklch(0.965 0.008 116.8); stroke: oklch(0.8 0.015 116.8); stroke-width: 0.75; stroke-linejoin: round; }
 /* Paper grain over the map, so the stamped marks sit on something with a surface */
@@ -1098,7 +1098,7 @@ a.case-media { display: block; }
   .case-meta, .case-media, .about-copy, .portrait { padding-top: 0; margin-top: 0; }
   .portrait { width: auto; max-width: 480px; }
   /* The map sets its own height from its viewBox; Safari can collapse an aspect-ratio box with only absolute children */
-  .away-map-wrap { max-width: 442px; min-height: 0; align-self: start; }
+  .away-map-wrap { max-width: 442px; min-height: 0; max-height: none; align-self: start; }
   .away-map { position: relative; height: auto; }
   /* The map scales down on phones; its labels stay readable */
   .map-stop { font-size: 16px; }
