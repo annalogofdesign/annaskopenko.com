@@ -283,7 +283,8 @@ a { color: inherit; }
   text-wrap: balance;
 }
 .hero-headline em {
-  font-size: 0.98em; /* the slant reads larger at the same size */
+  font-size: 0.991em; /* a touch under the roman, since the slant reads larger; 87.2px at the 88px design size */
+  font-weight: 400; /* a step over the roman's 360, so the phrase carries the line */
 }
 
 .hero-nav {

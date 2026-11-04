@@ -24,6 +24,9 @@
     raf = requestAnimationFrame(loop);
   };
   const stop = () => { cancelAnimationFrame(raf); raf = undefined; };
+  // Hold the opening frame while the images load; the bare CSS is the finished drawing,
+  // which would show for a moment and then snap back to the start
+  render(0);
   new IntersectionObserver(([e]) => { visible = e.isIntersecting; visible ? start() : stop(); })
     .observe(document.documentElement);
   // Start once the fonts and every image (masks included, via a hidden <img>) are in,
