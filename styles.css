@@ -722,8 +722,7 @@ a.case-media { display: block; }
 
 .about-intro {
   display: grid;
-  /* The portrait's column ends at the page edge; the portrait itself stops at the map's edge */
-  grid-template-columns: minmax(0, 1fr) calc(var(--side) + var(--band-pad));
+  grid-template-columns: minmax(0, 1fr) var(--side);
   gap: 32px;
   padding-block: clamp(40px, calc(64 * var(--u)), 64px);
 }
@@ -738,8 +737,9 @@ a.case-media { display: block; }
 .about-copy .lede { max-width: 640px; }
 .portrait {
   position: relative;
-  /* The map's width: same left edge, and it stops short of the column by the band's padding */
-  width: calc(100% - var(--band-pad));
+  /* The map's width, right-aligned to the page edge like the work tiles */
+  width: var(--side);
+  margin-left: auto;
   aspect-ratio: 544 / 610;
   margin-top: clamp(0px, calc(65 * var(--u)), 65px);
   overflow: hidden;
@@ -1096,7 +1096,7 @@ a.case-media { display: block; }
 @media (max-width: 860px) {
   .case, .about-intro, .away, .contact-grid { grid-template-columns: minmax(0, 1fr); }
   .case-meta, .case-media, .about-copy, .portrait { padding-top: 0; margin-top: 0; }
-  .portrait { width: auto; max-width: 480px; }
+  .portrait { width: auto; max-width: 480px; margin-left: 0; }
   /* The map sets its own height from its viewBox; Safari can collapse an aspect-ratio box with only absolute children */
   .away-map-wrap { max-width: 442px; min-height: 0; max-height: none; align-self: start; }
   .away-map { position: relative; height: auto; }
