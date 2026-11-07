@@ -1,0 +1,24 @@
+{
+  "stops": [
+    {"name": "Lima", "lat": -12.05, "lon": -77.04, "side": "right"},
+    {"name": "Huacachina", "lat": -14.09, "lon": -75.76, "side": "left"},
+    {"name": "Arequipa", "lat": -16.4, "lon": -71.54, "side": "right"},
+    {"name": "Colca Canyon", "lat": -15.61, "lon": -71.88, "side": "right"},
+    {"name": "Machu Picchu", "lat": -13.16, "lon": -72.55, "side": "left"},
+    {"name": "Cusco", "lat": -13.53, "lon": -71.97, "side": "right", "dy": 20},
+    {"name": "Sacred Valley", "lat": -13.32, "lon": -71.96, "side": "right"}
+  ],
+  "visits": [
+    {"place": "Lima", "from": "2026-10-13", "to": "2026-10-15", "stop": "Lima"},
+    {"place": "Huacachina", "from": "2026-10-16", "to": "2026-10-17", "stop": "Huacachina"},
+    {"place": "Arequipa", "from": "2026-10-18", "to": "2026-10-19", "stop": "Arequipa"},
+    {"place": "Colca Canyon", "from": "2026-10-20", "to": "2026-10-21", "stop": "Colca Canyon"},
+    {"place": "Arequipa", "from": "2026-10-22", "to": "2026-10-22", "stop": "Arequipa"},
+    {"place": "Ollantaytambo", "area": "Sacred Valley", "from": "2026-10-23", "to": "2026-10-25", "stop": "Sacred Valley"},
+    {"place": "Machu Picchu", "area": "Inca Trail", "from": "2026-10-26", "to": "2026-10-26", "stop": "Machu Picchu"},
+    {"place": "Cusco", "from": "2026-10-27", "to": "2026-10-29", "stop": "Cusco"},
+    {"place": "Arin", "area": "Sacred Valley", "from": "2026-10-30", "to": "2026-11-03", "stop": "Sacred Valley"},
+    {"place": "Calca", "area": "Sacred Valley", "from": "2026-11-04", "to": "2026-11-05", "stop": "Sacred Valley"},
+    {"place": "Pisac", "area": "Sacred Valley", "from": "2026-11-06", "to": "2026-11-07", "stop": "Sacred Valley"}
+  ]
+}

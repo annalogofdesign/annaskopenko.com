@@ -781,9 +781,9 @@ a.case-media { display: block; }
   background: var(--now);
   box-shadow: 0 0 0 2.5px var(--sand), 0 0 0 4px var(--now);
 }
-/* Stretches to the height of the text beside it; the SVG crops to fill. Capped so the crop never
-   narrows the map below 378 of its 442 units, the span of the stops and their names */
-.away-map-wrap { position: relative; align-self: stretch; min-height: min(470px, calc(var(--side) * 470 / 442)); max-height: calc(var(--side) * 470 / 378); outline: 1px solid rgb(0 0 0 / 0.1); outline-offset: -1px; background: oklch(0.925 0.012 116.8); }
+/* Stretches to the height of the text beside it. The SVG fits its width and shows more land above and
+   below when the box is tall, so no stop or name is ever cropped */
+.away-map-wrap { position: relative; align-self: stretch; min-height: min(470px, calc(var(--side) * 470 / 442)); outline: 1px solid rgb(0 0 0 / 0.1); outline-offset: -1px; background: oklch(0.925 0.012 116.8); }
 .away-map { position: absolute; inset: 0; display: block; width: 100%; height: 100%; }
 .map-land { fill: oklch(0.965 0.008 116.8); stroke: oklch(0.8 0.015 116.8); stroke-width: 0.75; stroke-linejoin: round; }
 /* Paper grain over the map, so the stamped marks sit on something with a surface */
@@ -816,6 +816,45 @@ a.case-media { display: block; }
 .map-ocean { font: italic 400 14px var(--serif); fill: var(--ink); opacity: 0.5; }
 .map-locator { fill: oklch(0.965 0.008 116.8); }
 .map-frame { fill: none; stroke: var(--now); stroke-width: 1; }
+
+/* The trip by date (trip.js): a strip across the map's foot with the day, the place, and a faint
+   line for the whole trip with a dot where each stop begins */
+.away-map [data-later] { opacity: 0.18 !important; }
+.away-map .map-pin, .away-map .map-stop { transition: opacity 200ms ease-out; }
+.map-here { fill: none; stroke: var(--now); stroke-width: 1.4; }
+.trip {
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: 2;
+  display: flex; flex-direction: column; gap: 4px;
+  padding: 28px 20px 10px;
+  background: linear-gradient(to top, oklch(0.955 0.009 116.8 / 0.96) 55%, oklch(0.955 0.009 116.8 / 0));
+}
+.trip-caption { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding-inline: 2px; }
+.trip-day { font: italic 400 16px/1.3 var(--serif); }
+.trip-place { font: 500 13px/1.3 var(--sans); text-align: right; }
+.trip-place small { font-size: 11px; font-weight: 400; opacity: 0.65; }
+.track { position: relative; height: 32px; cursor: grab; touch-action: none; border-radius: 4px; }
+.track:active { cursor: grabbing; }
+.track:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+.track-rail, .track-done { position: absolute; left: 0; top: 50%; height: 1px; background: var(--ink); }
+.track-rail { right: 0; opacity: 0.12; }
+.track-done { opacity: 0.3; }
+.track-stop { position: absolute; top: 50%; width: 5px; height: 5px; translate: -50% -50%; border-radius: 50%; background: var(--ink); opacity: 0.7; transition: opacity 120ms ease-out; }
+.track-stop[data-later] { opacity: 0.2; }
+.track-mark {
+  position: absolute; top: 50%; width: 9px; height: 9px; translate: -50% -50%; border-radius: 50%;
+  background: var(--now); box-shadow: 0 0 0 4px oklch(0.5 0.11 155 / 0.18);
+  transition: left 90ms ease-out, scale 150ms ease-out;
+}
+.track-done { transition: width 90ms ease-out; }
+@media (hover: hover) and (pointer: fine) {
+  .track:hover .track-mark { scale: 1.25; }
+}
+/* Until the line has been used once; it fades in place so nothing moves */
+.trip-hint { margin-top: -6px; text-align: center; font: 400 11px var(--sans); opacity: 0.45; transition: opacity 300ms ease-out; }
+.trip-hint[data-gone] { opacity: 0; }
+@media (prefers-reduced-motion: reduce) {
+  .away-map .map-pin, .away-map .map-stop, .track-stop, .track-mark, .track-done, .trip-hint { transition: none; }
+}
 
 /* ---------- Contact ---------- */
 
@@ -1098,7 +1137,7 @@ a.case-media { display: block; }
   .case-meta, .case-media, .about-copy, .portrait { padding-top: 0; margin-top: 0; }
   .portrait { width: auto; max-width: 480px; margin-left: 0; }
   /* The map sets its own height from its viewBox; Safari can collapse an aspect-ratio box with only absolute children */
-  .away-map-wrap { max-width: 442px; min-height: 0; max-height: none; align-self: start; }
+  .away-map-wrap { max-width: 442px; min-height: 0; align-self: start; }
   .away-map { position: relative; height: auto; }
   /* The map scales down on phones; its labels stay readable */
   .map-stop { font-size: 16px; }
