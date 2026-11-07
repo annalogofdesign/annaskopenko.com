@@ -1,0 +1,303 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<!-- Iris case study, the finished system as a bento: the mark, Fay's appointment card, type, buttons,
+     badges, goals, a text input and controls. Components follow the Iris Common Components
+     Figma file (sizes, radii, type styles) and colors follow its semantic tokens (Iris Primitive &
+     Semantic Tokens): action, message, control, field and progressBar. Each tile draws its component at real size and zooms it, so the
+     proportions stay true. Drawn at 1600×1000 like the other Iris animations; render(t) draws any moment. -->
+<style>
+@font-face{font-family:Manrope;src:url(../../fonts/manrope-var-latin.woff2) format("woff2");font-weight:200 800}
+*{box-sizing:border-box;margin:0}
+html,body{width:1600px;height:1000px;overflow:hidden}
+html{background:transparent}
+body{transform-origin:0 0;-webkit-font-smoothing:antialiased}
+body{background:transparent;color:var(--fg);font-family:Manrope,-apple-system,sans-serif;position:relative}
+/* Colours are the tokens file's semantic tokens, Light and Dark. --d runs 0 → 1 when the theme
+   switch flips, and every token moves with it */
+body{--d:0;
+  --fg:color-mix(in oklab,#2b2c36,#ffffff calc(var(--d) * 100%));
+  --fg2:color-mix(in oklab,#828489,#a5a6ae calc(var(--d) * 100%));
+  --brand-fg:color-mix(in oklab,#6460fb,#b7b9ff calc(var(--d) * 100%));
+  --surface:color-mix(in oklab,#ffffff,#1d1e28 calc(var(--d) * 100%));
+  --dash:color-mix(in oklab,#f3f3f6,#2b2c36 calc(var(--d) * 100%));
+  --badge-tile:color-mix(in oklab,#f3f3f6,#1d1e28 calc(var(--d) * 100%));
+  --stroke:color-mix(in oklab,#e4e4e8,#5a5b63 calc(var(--d) * 100%));
+  --tile-stroke:color-mix(in oklab,rgb(29 42 48 / .12),rgb(255 255 255 / .08) calc(var(--d) * 100%));
+  --press:color-mix(in oklab,#3430a8,#9294ff calc(var(--d) * 100%));
+  --sec-bg:color-mix(in oklab,#f5f6ff,rgb(255 255 255 / 0) calc(var(--d) * 100%));
+  --sec-stroke:color-mix(in oklab,rgb(100 96 251 / .2),#6460fb calc(var(--d) * 100%));
+  --ter-bg:color-mix(in oklab,#ffffff,#2b2c36 calc(var(--d) * 100%));
+  --ter-fg:color-mix(in oklab,#2b2c36,#fbfbfc calc(var(--d) * 100%));
+  --n-bg:color-mix(in oklab,#fbfbfc,#2b2c36 calc(var(--d) * 100%));
+  --n-fg:color-mix(in oklab,#2b2c36,#fbfbfc calc(var(--d) * 100%));
+  --ne-bg:color-mix(in oklab,#2b2c36,#fbfbfc calc(var(--d) * 100%));
+  --ne-fg:color-mix(in oklab,#ffffff,#1d1e28 calc(var(--d) * 100%));
+  --b-bg:color-mix(in oklab,#f5f6ff,#3430a8 calc(var(--d) * 100%));
+  --b-fg:color-mix(in oklab,#3430a8,#f5f6ff calc(var(--d) * 100%));
+  --s-bg:color-mix(in oklab,#ecfdf5,#065f46 calc(var(--d) * 100%));
+  --s-fg:color-mix(in oklab,#065f46,#ecfdf5 calc(var(--d) * 100%));
+  --w-bg:color-mix(in oklab,#fff7ed,#92400e calc(var(--d) * 100%));
+  --w-fg:color-mix(in oklab,#9a3412,#fff7ed calc(var(--d) * 100%));
+  --e-bg:color-mix(in oklab,#fef2f2,#7f1d1d calc(var(--d) * 100%));
+  --e-fg:color-mix(in oklab,#991b1b,#fef2f2 calc(var(--d) * 100%));
+  --cal-bg:color-mix(in oklab,#fbfbfc,#5a5b63 calc(var(--d) * 100%));
+  --cal-head:color-mix(in oklab,#e7e8ff,#403ccf calc(var(--d) * 100%));
+  --track:color-mix(in oklab,#e7e8ff,#403ccf calc(var(--d) * 100%));
+  --track-fg:color-mix(in oklab,#3430a8,#fbfbfc calc(var(--d) * 100%));
+  --ctl-bg:color-mix(in oklab,#ffffff,#2b2c36 calc(var(--d) * 100%));
+  --sw-off:color-mix(in oklab,#d0d1d6,#5a5b63 calc(var(--d) * 100%));
+  --focus:color-mix(in oklab,#3430a8,#b7b9ff calc(var(--d) * 100%));}
+.mono{font-family:ui-monospace,"SF Mono",Menlo,monospace}
+.abs{position:absolute}
+.cap{left:96px;top:72px;font-size:26px;letter-spacing:.01em}
+.cap small{display:block;font-family:Manrope;font-size:17px;letter-spacing:.14em;text-transform:uppercase;color:#7a868b;margin-bottom:10px}
+
+/* Four columns of 334 and three rows of 269, 24 apart, from 72 to 928. The top row's card and type
+   tiles split columns 2–4 in half, so the card sits at its real mobile width */
+.tile{position:absolute;padding:28px;border-radius:22px;background:var(--surface);border:1.5px solid var(--tile-stroke);
+  box-shadow:0 1px 2px rgba(29,42,48,.05),0 18px 40px -24px rgba(29,42,48,.25);overflow:hidden;
+  display:flex;flex-direction:column}
+/* Every tile: the heading, at least 20 below it, then its content centred in the space left */
+.head + *{margin-top:auto;margin-bottom:auto}
+.head{flex:none;margin-bottom:20px;font-size:16px;letter-spacing:.12em;text-transform:uppercase;color:var(--fg2)}
+.z{zoom:1.5}
+
+/* Type styles from the tokens file: Titles/H2 20/25 bold, Small Body 14/20, Caption 12/18 */
+.h2{font-size:20px;line-height:25px;font-weight:700}
+.sb{font-size:14px;line-height:20px;font-weight:500}
+.sb.semi{font-weight:600}
+.sb.bold{font-weight:700}
+.cp{font-size:12px;line-height:18px;font-weight:500}
+.cp.semi{font-weight:600}
+.fg2{color:var(--fg2)}
+
+/* Buttons, from the buttons animation: round, light-purple secondary */
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;height:44px;padding:0 24px;border-radius:800px;
+  font-size:14px;line-height:20px;font-weight:700;white-space:nowrap;border:1px solid transparent}
+.btn.sm{height:36px;padding:0 16px}
+.btn.primary{background:#6460fb;border-color:#6460fb;color:#fff}
+.btn.secondary{background:var(--sec-bg);border-color:var(--sec-stroke);color:var(--brand-fg)}
+.btn.tertiary{background:var(--ter-bg);border-color:var(--stroke);color:var(--ter-fg)}
+.btn.danger{background:#dc2626;border-color:#dc2626;color:#fff}
+
+/* Badges: standard and emphasis in five tones */
+.bdg{display:inline-flex;align-items:center;gap:4px;height:28px;padding:0 12px;border-radius:16px;font-size:14px;line-height:20px;font-weight:500;white-space:nowrap}
+.neutral{background:var(--n-bg);color:var(--n-fg)}   .neutral.e{background:var(--ne-bg);color:var(--ne-fg)}
+.brand{background:var(--b-bg);color:var(--b-fg)}       .brand.e{background:#6460fb;color:#f5f6ff}
+.success{background:var(--s-bg);color:var(--s-fg)}     .success.e{background:#059669;color:#ecfdf5}
+.warning{background:var(--w-bg);color:var(--w-fg)}     .warning.e{background:#ea580c;color:#fff7ed}
+.error{background:var(--e-bg);color:var(--e-fg)}       .error.e{background:#dc2626;color:#fef2f2}
+.bdg svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+
+
+#hero{left:96px;top:72px;width:334px;height:562px;border:0;color:#fff;
+  background:linear-gradient(135deg,#6460fb 0%,#5753ee 55%,#4844de 100%)}
+#hero img{position:absolute;left:17px;top:64px;width:300px;filter:drop-shadow(0 24px 30px rgba(30,10,120,.35))}
+#hero .name{position:absolute;left:28px;bottom:88px;font-size:44px;letter-spacing:-.01em}
+#hero .sub{position:absolute;left:28px;bottom:28px;font-size:18px;line-height:1.45;color:rgba(255,255,255,.75)}
+
+/* The appointment card at its mobile width: card radius lg, 16 padding, elevation/md, calendar 48 */
+#card{left:454px;top:72px;width:513px;height:269px;background:var(--dash)}
+#card .z{zoom:1.25;align-self:center}
+.appt{width:327px;padding:16px;border-radius:16px;background:var(--surface);box-shadow:0 -1px 16px rgba(23,23,23,.08)}
+.appt .row{display:flex;gap:16px;align-items:flex-start}
+.cal{width:48px;height:48px;border-radius:4px;overflow:hidden;text-align:center;background:var(--cal-bg);border:1px solid var(--stroke)}
+.cal .m{height:17px;background:var(--cal-head);color:var(--brand-fg);font-size:12px;line-height:18px;font-weight:600}
+.cal .d{font-size:20px;line-height:29px;font-weight:700}
+.appt .info{flex:1}
+.appt .info .cp{margin-top:4px}
+.appt .dots{font-size:18px;line-height:16px;letter-spacing:1px;color:var(--fg)}
+.appt .btn{margin-top:16px}
+
+#type{left:991px;top:72px;width:513px;height:269px}
+/* Type: Manrope, and four roles from the tokens file's text styles, each set in itself */
+#type .box{display:flex;align-items:center;justify-content:space-between;padding-right:8px}
+#type .aa{font-size:128px;line-height:.9;letter-spacing:-.02em}
+#type .roles{zoom:1.4;display:grid;gap:4px;line-height:1.2}
+.t1{font-size:24px;font-weight:800}.t2{font-size:20px;font-weight:700}.tb{font-size:16px;font-weight:500}.tc{font-size:12px;font-weight:500;color:var(--fg2)}
+
+#button{left:454px;top:365px;width:334px;height:269px}
+#button .stack{display:grid;gap:10px}
+#button .stack .btn{height:48px;font-size:17px}
+#button .pair{display:flex;gap:10px}
+#button .pair .btn{flex:1;padding:0}
+
+#badge{left:812px;top:365px;width:692px;height:269px;background:var(--badge-tile)}
+#badge .z{zoom:1.45;display:grid;gap:12px}
+#badge .r{display:flex;gap:8px}
+
+/* Bottom-row parts from the Iris Figma file: goalItem, progressBar, textInput, switch, checkbox */
+.row3{top:658px;height:269px}
+.c12{left:96px;width:692px}.c3{left:812px;width:334px}.c4{left:1170px;width:334px}.c34{left:812px;width:692px}
+.soft{background:var(--dash)}
+.gz{zoom:1.3;display:grid;gap:8px}
+.prog{display:flex;align-items:center;gap:8px}
+.prog svg,.goal .bolt{width:16px;height:16px;fill:none;stroke:var(--brand-fg);stroke-width:1.5;stroke-linejoin:round;flex:none}
+.track{position:relative;flex:1;height:20px;border-radius:10px;background:var(--track);overflow:hidden}
+.track i{position:absolute;left:0;top:0;bottom:0;width:25%;border-radius:10px;background:#9294ff}
+.track span{position:absolute;inset:0;font-variant-numeric:tabular-nums;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:var(--track-fg)}
+.goal{display:flex;align-items:center;gap:10px;height:44px;padding:0 8px 0 12px;border-radius:12px;background:var(--surface);box-shadow:0 1px 8px rgba(23,23,23,.06)}
+.goal .e{font-size:18px}
+.goal .sb{flex:1}
+.chk{width:24px;height:24px;border-radius:6px;border:1.5px solid var(--stroke);background:var(--ctl-bg);display:flex;align-items:center;justify-content:center;flex:none}
+.chk.on{background:#6460fb;border-color:#6460fb}
+.chk svg{width:14px;height:14px;fill:none;stroke:#fff;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.iz{zoom:1.35}
+.field{margin-top:4px;height:40px;padding:0 12px;border-radius:12px;border:1.5px solid var(--focus);background:var(--surface);display:flex;align-items:center}
+.field .caret{width:1.5px;height:18px;background:var(--focus);margin-left:1px}
+.iz .cp{margin-top:4px}
+.cz{zoom:1.3;display:grid;gap:12px}
+.ctl{display:flex;align-items:center;justify-content:space-between;gap:12px;white-space:nowrap}
+.sw{width:44px;height:26px;border-radius:13px;background:var(--sw-off);position:relative;flex:none}
+.sw::after{content:"";position:absolute;left:calc(2px + 18px * var(--k, 0));top:2px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.sw.on{background:#6460fb;--k:1}
+/* Radio, as in the Iris file: a ring when off, a filled circle with a white dot when on. --r runs 0 → 1 */
+.rgroup{display:flex;gap:12px}
+.ropt{display:flex;align-items:center;gap:6px}
+.radio{width:20px;height:20px;border-radius:50%;flex:none;position:relative;
+  background:color-mix(in oklab,var(--ctl-bg),#6460fb calc(var(--r, 0) * 100%));
+  box-shadow:inset 0 0 0 1.5px color-mix(in oklab,var(--stroke),#6460fb calc(var(--r, 0) * 100%))}
+.radio::after{content:"";position:absolute;inset:0;margin:auto;width:8px;height:8px;border-radius:50%;background:#fff;scale:var(--r, 0)}
+</style></head>
+<body>
+
+<div class="tile" id="hero">
+  <img src="iris-mark-3d-lg.png" alt="">
+  <p class="name">Iris</p>
+  <p class="sub">Fay’s design system<br>24 components · 186 icons</p>
+</div>
+
+<div class="tile" id="card">
+  <p class="head">Card · appointment</p>
+  <div class="z"><div class="appt">
+    <div class="row">
+      <div class="cal"><div class="m">NOV</div><div class="d">8</div></div>
+      <div class="info"><p class="sb bold">11:00 AM – 12:00 PM (PT)</p><p class="cp fg2">Follow-up with Jane Williams</p></div>
+      <span class="dots">···</span>
+    </div>
+    <div class="btn primary" id="join">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="2" y="5" width="11" height="10" rx="2.5"/><path d="M13 9l4.5-2.5v7L13 11"/></svg>
+      Join appointment</div>
+  </div></div>
+</div>
+
+<div class="tile" id="type">
+  <p class="head">Type · Manrope</p>
+  <div class="box">
+    <p class="aa">Aa</p>
+    <div class="roles">
+      <p class="t1">Heading</p>
+      <p class="t2">Title</p>
+      <p class="tb">Body text</p>
+      <p class="tc">Caption</p>
+    </div>
+  </div>
+</div>
+
+<div class="tile" id="button">
+  <p class="head">Button</p>
+  <div class="stack">
+    <div class="btn primary" id="book">Book now</div>
+    <div class="btn secondary">Reschedule</div>
+    <div class="pair"><div class="btn tertiary">Not now</div><div class="btn danger">Cancel</div></div>
+  </div>
+</div>
+
+<div class="tile" id="badge">
+  <p class="head">Badge · 5 tones · standard and emphasis</p>
+  <div class="z">
+    <div class="r">
+      <span class="bdg neutral">Past</span>
+      <span class="bdg brand"><svg viewBox="0 0 16 16" style="stroke-width:1.25"><path d="M8 2.2l1.7 3.5 3.8.5-2.8 2.6.7 3.8L8 10.8l-3.4 1.8.7-3.8-2.8-2.6 3.8-.5z"/></svg>New</span>
+      <span class="bdg success">Covered</span>
+      <span class="bdg warning">Pending</span>
+      <span class="bdg error">Cancelled</span>
+    </div>
+    <div class="r">
+      <span class="bdg neutral e">Past</span>
+      <span class="bdg brand e">Earn $15</span>
+      <span class="bdg success e"><svg viewBox="0 0 16 16"><path d="M3.5 8.5l3 3 6-7"/></svg>Completed</span>
+      <span class="bdg warning e">Due today</span>
+      <span class="bdg error e">Missed</span>
+    </div>
+  </div>
+</div>
+
+<div class="tile row3 c12 soft" id="t-goals">
+  <p class="head">Goals · progress bar · checkbox</p>
+  <div class="gz">
+    <div class="prog"><svg viewBox="0 0 16 16"><path d="M9.2 1.5L3.8 9h4.1l-1 5.5L12.3 7H8.2z"/></svg><div class="track"><i id="fill"></i><span id="count">5 / 20</span></div></div>
+    <div class="goal"><span class="e">💧</span><span class="sb semi">Add a vegetable to dinner</span><span class="bolt"><svg viewBox="0 0 16 16"><path d="M9.2 1.5L3.8 9h4.1l-1 5.5L12.3 7H8.2z"/></svg></span><span class="chk on"><svg viewBox="0 0 14 14"><path d="M3 7.3l2.6 2.6L11 4.4"/></svg></span></div>
+    <div class="goal"><span class="e">🥒</span><span class="sb semi">Cook a simple meal at home</span><span class="bolt"><svg viewBox="0 0 16 16"><path d="M9.2 1.5L3.8 9h4.1l-1 5.5L12.3 7H8.2z"/></svg></span><span class="chk" id="chk2"><svg viewBox="0 0 14 14"><path id="tick2" pathLength="1" d="M3 7.3l2.6 2.6L11 4.4"/></svg></span></div>
+  </div>
+</div>
+
+<div class="tile row3 c3" id="t-input">
+  <p class="head">Text input</p>
+  <div class="iz">
+    <p class="sb">Insurance member ID</p>
+    <div class="field"><span class="sb">XJP 4402 8817</span><span class="caret" id="caret"></span></div>
+    <p class="cp fg2">As it appears on your card</p>
+  </div>
+</div>
+
+<div class="tile row3 c4" id="t-ctl">
+  <p class="head">Controls</p>
+  <div class="cz">
+    <div class="ctl"><span class="sb">Share with my RD</span><span class="chk on"><svg viewBox="0 0 14 14"><path d="M3 7.3l2.6 2.6L11 4.4"/></svg></span></div>
+    <div class="ctl"><span class="sb">Remind by</span><span class="rgroup"><span class="ropt"><span class="radio" id="r1" style="--r:1"></span><span class="sb">Text</span></span><span class="ropt"><span class="radio" id="r2"></span><span class="sb">Email</span></span></span></div>
+    <div class="ctl"><span class="sb">Dark mode</span><span class="sw" id="sw3"></span></div>
+  </div>
+</div>
+
+<script>
+const clamp=v=>Math.max(0,Math.min(1,v));
+const seg=(t,a,b)=>clamp((t-a)/(b-a));
+const out=t=>1-Math.pow(1-t,3);
+const $=id=>document.getElementById(id);
+const TILES=['hero','card','type','button','badge','t-goals','t-input','t-ctl'];
+const DUR=14;
+const mix=(a,b,k)=>`color-mix(in oklab,${b} ${k*100}%,${a})`;
+const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+window.render=function(t){
+  const first=t;t=t%DUR;
+  // the tiles come in once, in reading order
+  TILES.forEach((id,i)=>{
+    const k=out(seg(first,.15+i*.09,.75+i*.09));
+    $(id).style.opacity=k;
+    $(id).style.transform=`translateY(${(1-k)*18}px)`;
+  });
+  // then someone uses it, one thing at a time, and it quietly resets at the end
+  const back=1-seg(t,13.1,13.5);
+  // the input has focus, so its caret blinks
+  $('caret').style.opacity=(t%1.06)<.53?1:0;
+  // a goal gets ticked: a press, the box fills, the tick draws, the bar moves 5/20 → 6/20
+  const press=seg(t,1.9,2)*(1-seg(t,2,2.15));
+  const c=out(seg(t,2,2.2))*back, d=out(seg(t,2.1,2.4))*back, g=out(seg(t,2.3,2.9))*back;
+  $('chk2').style.scale=1-.04*press;
+  $('chk2').style.background=mix('var(--ctl-bg)','#6460fb',c);
+  $('chk2').style.borderColor=mix('var(--stroke)','#6460fb',c);
+  $('tick2').style.strokeDasharray=1;$('tick2').style.strokeDashoffset=1-d;
+  $('fill').style.width=`${25+5*g}%`;
+  $('count').textContent=g>.5?'6 / 20':'5 / 20';
+  // reminders move from Text to Email: one radio lets go as the other fills
+  const rd=out(seg(t,4.1,4.35))*back;
+  $('r1').style.setProperty('--r',1-rd);
+  $('r2').style.setProperty('--r',rd);
+  // Book now is pressed, in the press colour
+  const p=seg(t,6,6.1)*(1-seg(t,6.2,6.45));
+  $('book').style.background=$('book').style.borderColor=p>.01?mix('#6460fb','var(--press)',p):'';
+  $('book').style.transform=`scale(${1-.04*p})`;
+  // and Join appointment, the same press
+  const j=seg(t,7.6,7.7)*(1-seg(t,7.8,8.05));
+  $('join').style.background=$('join').style.borderColor=j>.01?mix('#6460fb','var(--press)',j):'';
+  $('join').style.transform=`scale(${1-.04*j})`;
+  // Dark mode switches on, the whole system follows on the same tokens, and it switches back
+  const dk=ease(seg(t,9,9.3))*(1-ease(seg(t,12,12.3)));
+  $('sw3').style.setProperty('--k',dk);
+  $('sw3').style.background=mix('var(--sw-off)','#6460fb',dk);
+  document.body.style.setProperty('--d',ease(seg(t,9.2,9.55))*(1-ease(seg(t,12.2,12.55))));
+};
+</script>
+<script src="play.js" data-still="3"></script>
+</body></html>
