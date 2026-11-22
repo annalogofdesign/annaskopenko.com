@@ -1025,7 +1025,7 @@ a.case-media { display: block; }
 /* The paper fits the frame in whole squares instead of a fixed 14px one, which got cut off at the right
    and bottom: 64 × 40 at 16:10 with a major line every four, then a closing line on those two edges.
    Phones get half as many squares so they don't turn to mesh */
-.cs-figure iframe.grid-paper {
+.cs-figure .grid-paper {
   --grid-major: 4;
   --cols: 64;
   --rows: 40;
@@ -1037,11 +1037,17 @@ a.case-media { display: block; }
     calc(100% / var(--cols)) calc(100% / var(--rows));
   box-shadow: inset -1px -1px 0 var(--grid-line-major);
 }
+/* A busy chart reads better on plain paper: the grain, no squares, and the same edge as the gridded frames */
+.cs-figure iframe.plain {
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='g' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' seed='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.3 0 0 0 0 0.24 0 0 0 0 0.16 0 0 0 0.4 -0.166'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E") 0 0 / 240px 240px, var(--bg);
+  outline: 0;
+  box-shadow: inset 0 0 0 1px rgb(127 166 201 / 0.35);
+}
 @container (max-width: 560px) {
-  .cs-figure iframe.grid-paper { --cols: 32; --rows: 20; }
+  .cs-figure .grid-paper { --cols: 32; --rows: 20; }
 }
 @media (pointer: coarse) {
-  .cs-figure iframe.grid-paper {
+  .cs-figure .grid-paper {
     background-size:
       240px 240px,
       calc(100% * var(--grid-major) / var(--cols)) calc(100% * var(--grid-major) / var(--rows)),
@@ -1086,8 +1092,58 @@ a.case-media { display: block; }
   font-size: 15px;
   letter-spacing: 0.03em;
   text-align: center;
-  opacity: 0.6;
+  color: color-mix(in oklab, var(--ink) 60%, transparent);
 }
+
+/* A pull quote: one line worth catching while skimming, in the serif italic */
+.cs-quote {
+  margin: 0.4em 0;
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(26px, calc(32 * var(--u)), 32px);
+  line-height: 1.25;
+  letter-spacing: -0.005em;
+  text-wrap: balance;
+}
+.cs-quote p { margin: 0; }
+
+/* A folded "more" block: the short version stays on the page, the reasoning opens on click */
+.cs-more {
+  border-top: var(--hairline) solid var(--rule);
+  border-bottom: var(--hairline) solid var(--rule);
+}
+.cs-more summary {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 0;
+  cursor: pointer;
+  list-style: none;
+  font-size: 16px;
+  letter-spacing: 0.02em;
+  color: color-mix(in oklab, var(--ink) 70%, transparent);
+}
+.cs-more summary::-webkit-details-marker { display: none; }
+/* The plus is drawn, not typed: a text "+" sits on the font's baseline and never lands dead centre */
+.cs-more summary::before {
+  content: "";
+  flex: none;
+  box-sizing: border-box;
+  width: 20px;
+  height: 20px;
+  border: var(--hairline) solid currentColor;
+  border-radius: 50%;
+  background:
+    linear-gradient(currentColor, currentColor) center / 9px 1.5px no-repeat,
+    linear-gradient(currentColor, currentColor) center / 1.5px 9px no-repeat;
+  transition: transform 200ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+.cs-more[open] summary::before { transform: rotate(45deg); }
+@media (hover: hover) { .cs-more summary:hover { color: var(--ink); } }
+.cs-more summary:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; border-radius: 2px; }
+.cs-more > p { margin: 0 0 1.1em; font-size: 0.9em; }
+@media (prefers-reduced-motion: reduce) { .cs-more summary::before { transition: none; } }
 
 .cs-meta {
   display: grid;

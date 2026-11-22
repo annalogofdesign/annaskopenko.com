@@ -2,11 +2,16 @@
   "stops": [
     {"name": "Lima", "lat": -12.05, "lon": -77.04, "side": "right"},
     {"name": "Huacachina", "lat": -14.09, "lon": -75.76, "side": "left"},
-    {"name": "Arequipa", "lat": -16.4, "lon": -71.54, "side": "right"},
+    {"name": "Arequipa", "lat": -16.4, "lon": -71.54, "side": "left"},
     {"name": "Machu Picchu", "lat": -13.16, "lon": -72.55, "side": "left"},
-    {"name": "Cusco", "lat": -13.53, "lon": -71.97, "side": "right", "dx": -14, "dy": 20},
+    {"name": "Cusco", "lat": -13.53, "lon": -71.97, "side": "right", "dx": 2, "dy": 9},
     {"name": "Sacred Valley", "lat": -13.32, "lon": -71.96, "side": "right"},
-    {"name": "La Paz", "lat": -16.5, "lon": -68.15, "side": "right"}
+    {"name": "La Paz", "lat": -16.5, "lon": -68.15, "side": "right"},
+    {"name": "Uyuni", "lat": -20.46, "lon": -66.83, "side": "right"},
+    {"name": "Atacama", "lat": -22.91, "lon": -68.2, "side": "left"},
+    {"name": "Salta", "lat": -24.79, "lon": -65.41, "side": "right"},
+    {"name": "Cafayate", "lat": -26.07, "lon": -65.98, "side": "right"},
+    {"name": "Cachi", "lat": -25.12, "lon": -66.16, "side": "left"}
   ],
   "visits": [
     {"place": "Lima", "from": "2026-10-13", "to": "2026-10-15", "stop": "Lima"},
@@ -18,6 +23,12 @@
     {"place": "Arin", "area": "Sacred Valley", "from": "2026-10-30", "to": "2026-11-03", "stop": "Sacred Valley"},
     {"place": "Calca", "area": "Sacred Valley", "from": "2026-11-04", "to": "2026-11-05", "stop": "Sacred Valley"},
     {"place": "Pisac", "area": "Sacred Valley", "from": "2026-11-06", "to": "2026-11-07", "stop": "Sacred Valley"},
-    {"place": "La Paz", "area": "Bolivia", "from": "2026-11-08", "to": "2026-11-09", "stop": "La Paz"}
+    {"place": "La Paz", "area": "Bolivia", "from": "2026-11-08", "to": "2026-11-11", "stop": "La Paz"},
+    {"place": "Uyuni", "area": "Bolivia", "from": "2026-11-12", "to": "2026-11-14", "stop": "Uyuni"},
+    {"place": "Salar de Uyuni", "area": "Bolivia", "from": "2026-11-15", "to": "2026-11-16", "stop": "Uyuni"},
+    {"place": "San Pedro de Atacama", "area": "Chile", "from": "2026-11-17", "to": "2026-11-19", "stop": "Atacama"},
+    {"place": "Salta", "area": "Argentina", "from": "2026-11-20", "to": "2026-11-20", "stop": "Salta"},
+    {"place": "Cafayate", "area": "Argentina", "from": "2026-11-21", "to": "2026-11-21", "stop": "Cafayate"},
+    {"place": "Cachi", "area": "Argentina", "from": "2026-11-22", "to": "2026-11-22", "stop": "Cachi"}
   ]
 }
