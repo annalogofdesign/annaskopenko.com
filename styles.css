@@ -798,9 +798,10 @@ a.case-media { display: block; }
   opacity: 0.55;
 }
 .map-route { fill: none; stroke: var(--ink); stroke-width: 1.6; stroke-dasharray: 0.1 5; stroke-linecap: round; stroke-linejoin: round; }
-/* Each stop is a ring-and-dot stamp; the inks are the stamp-pad ones in stamp-render.js */
+/* A past stop is one pressed dot, where she is now a ring-and-dot; the inks are the stamp-pad ones in stamp-render.js */
 .map-pin circle:first-child { fill: none; stroke: currentColor; stroke-width: 1.5; }
 .map-pin circle:last-child { fill: currentColor; }
+.map-pin circle:only-child { stroke: none; }
 .map-pin--blue { color: oklch(0.45 0.13 258); }
 .map-pin--navy { color: oklch(0.23 0.028 219.7); }
 .map-pin--violet { color: oklch(0.42 0.14 298); }
